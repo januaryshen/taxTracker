@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from .models import MileageData, OtherExpenses, User 
 from .serializers import OtherExpensesSerializer, UserSerializer, MileageDataSerializer
+import requests
+from django.conf import settings
 
 class GenericAPIView(generics.GenericAPIView):
     serializer_class = None
@@ -43,14 +45,52 @@ class GenericAPIView(generics.GenericAPIView):
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class MileageDataAPIView(GenericAPIView):
-    queryset = MileageData.objects.all()
-    serializer_class = MileageDataSerializer
+
+class UserAPIView(GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer  
+
 
 class OtherExpensesAPIView(GenericAPIView):
     queryset = OtherExpenses.objects.all()
     serializer_class = OtherExpensesSerializer
+  
 
-class UserAPIView(GenericAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer      
+class MileageDataAPIView(GenericAPIView):
+    queryset = MileageData.objects.all()
+    serializer_class = MileageDataSerializer
+
+    def post(self, request, *args, **kwargs):
+        departure_location = request.data.get('departure_location')
+        arrival_location = request.data.get('arrival_location')
+
+        if departure_location and arrival_location:
+            # Call Google Maps API to get mileage
+            distance = self.get_mileage_from_google_maps(departure_location, arrival_location)
+            if distance is None:
+                return Response({"error": "Could not calculate mileage"}, status=status.HTTP_400_BAD_REQUEST)
+            request.data['mileage'] = distance
+
+        return super().post(request, *args, **kwargs)
+
+    def get_mileage_from_google_maps(self, origin, destination):
+        api_key = settings.GOOGLE_MAPS_API_KEY  # Ensure this is added in your settings
+        url = "https://maps.googleapis.com/maps/api/distancematrix/json"
+
+        params = {
+            "origins": origin,
+            "destinations": destination,
+            "key": api_key,
+            "units": "imperial"  # or "metric"
+        }
+
+        response = requests.get(url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            # Extract distance from response
+            print(data)
+            distance = data['rows'][0]['elements'][0]['distance']['value']  # value in meters
+            return distance / 1000.0  # convert to kilometers if needed
+        return None
+
+  
