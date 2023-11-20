@@ -1,7 +1,7 @@
 /* src/components/NavBar.css */
 
 .nav {
-    background-color: #00a8b5;
+    background-color: #647D91;
     color: white;
     padding: 0.5rem 0;
   }
@@ -28,8 +28,14 @@
   }
   
   .nav a:hover {
-    background-color: #f3ae4b;
-    color: #de4383;
+    background-color: #7FB3D5;
+    color: #F2F2F2;
+    border-radius: 8px;
+  }
+
+  .nav a:active {
+    background-color: #647D91;
+    color: #F2F2F2;
     border-radius: 8px;
   }
   

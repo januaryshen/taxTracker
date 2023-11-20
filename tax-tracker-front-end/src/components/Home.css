@@ -1,0 +1,25 @@
+.home-container {
+    text-align: center; /* Center aligns the content */
+    padding: 2rem;
+    font-family: Arial, sans-serif; /* Use a font that matches your app's style */
+}
+
+.home-container h1 {
+    font-size: 2.5rem; /* Larger font size for the heading */
+    color: #333; /* Adjust color as needed */
+    margin-bottom: 1rem;
+}
+
+.home-container p {
+    font-size: 1.2rem; /* Adjust font size for paragraph */
+    color: #666; /* Lighter color for the text */
+    line-height: 1.5; /* Spacing between lines */
+    margin-bottom: 1rem;
+}
+
+.home-container img {
+    max-width: 50%; /* Full width of the container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the image */
+    margin-top: 2rem; /* Space above the image */
+}

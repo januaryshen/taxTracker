@@ -1,0 +1,68 @@
+/* src/components/ListExpenses.css */
+
+.list-expenses-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.list-expenses-container h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.list-expenses-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.list-expenses-table thead {
+    background-color:  #3E5F7D;
+    color: white;
+}
+
+.list-expenses-table th, .list-expenses-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.list-expenses-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.list-expenses-table tr:hover {
+    background-color: #ddd;
+}
+
+.list-expenses-table thead tr:hover {
+    background-color: #3E5F7D; /* Keeps the background color the same on hover */
+}
+
+.list-expenses-table th.date-column, 
+.list-expenses-table td.date-column {
+    width: 120px; /* Adjust the width as needed */
+}
+
+.list-expenses-table th.actions-column, 
+.list-expenses-table td.actions-column {
+    width: 150px; /* Adjust the width as needed */
+}
+
+.list-expenses-table button {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #8C8C8C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.list-expenses-table button:hover {
+    background-color: #007B9E;
+}

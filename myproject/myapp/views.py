@@ -5,6 +5,7 @@ from .models import MileageData, OtherExpenses, User
 from .serializers import OtherExpensesSerializer, UserSerializer, MileageDataSerializer
 import requests
 from django.conf import settings
+from django.db.models import Q
 
 class GenericAPIView(generics.GenericAPIView):
     serializer_class = None
@@ -14,12 +15,25 @@ class GenericAPIView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         if 'pk' in kwargs:
             # Get a single item
-            item = generics.get_object_or_404(self.get_queryset(), pk=kwargs['pk'])
+            item = get_object_or_404(self.get_queryset(), pk=kwargs['pk'])
             serializer = self.get_serializer(item)
         else:
             # List items
             queryset = self.filter_queryset(self.get_queryset())
+
+            startDate = request.query_params.get('startDate')
+            endDate = request.query_params.get('endDate')
+            query = Q()
+            if startDate:
+                query &= Q(date__gte=startDate)
+            if endDate:
+                query &= Q(date__lte=endDate)
+
+            if query:
+                queryset = queryset.filter(query)
+
             serializer = self.get_serializer(queryset, many=True)
+        
         return Response(serializer.data)
 
     # POST method for creating an item
