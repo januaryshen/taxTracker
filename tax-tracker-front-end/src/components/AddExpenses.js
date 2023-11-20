@@ -4,42 +4,34 @@ import ExpenseEntry from "./ExpenseEntry";
 import "./AddExpenses.css";
 
 function AddExpenses() {
+  const today = new Date().toISOString().split("T")[0];
   const [expenseData, setExpenseData] = useState({
     user: 1,
-    date: "",
+    date: today,
     description: "",
     amount: "",
   });
-
-  const handleChange = (e) => {
-    setExpenseData({ ...expenseData, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // POST request to expenses/ endpoint
     fetch("http://127.0.0.1:8000/api/expenses/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Add authentication headers if needed
       },
       body: JSON.stringify(expenseData),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        // Clear the form or give feedback to the user
+        alert("Transaction added successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
-        // Handle errors here, such as displaying a message to the user
       });
   };
 
   const handleCancel = () => {
-    // Clear the form or handle the cancel action
-    setExpenseData({ date: "", description: "", amount: "" });
+    setExpenseData({ ...expenseData, description: "", amount: "" });
   };
 
   return (
@@ -47,7 +39,9 @@ function AddExpenses() {
       <h2>Add Expense</h2>
       <ExpenseEntry
         expenseData={expenseData}
-        onChange={handleChange}
+        onChange={(e) =>
+          setExpenseData({ ...expenseData, [e.target.name]: e.target.value })
+        }
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       />

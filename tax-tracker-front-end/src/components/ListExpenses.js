@@ -3,6 +3,7 @@ import ExpenseEntry from "./ExpenseEntry";
 import { DateRangeContext } from "./DateRangeContext";
 import DateRangeSelector from "./DateRangeSelector";
 import "./ListExpenses.css";
+import ExpensesTable from "./ExpensesTable";
 
 const ListExpenses = () => {
   const [expenses, setExpenses] = useState([]);
@@ -14,21 +15,16 @@ const ListExpenses = () => {
     direction: "ascending",
   });
 
-  console.log("startDate", startDate);
-  console.log("data", expenses);
-
   useEffect(() => {
     fetchExpenses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
   const fetchExpenses = () => {
-    console.log("featching");
-    console.log("start_date", startDate);
     const queryString = new URLSearchParams({
       startDate,
       endDate,
     }).toString();
-    console.log("queryString", queryString);
     fetch(`http://127.0.0.1:8000/api/expenses/?${queryString}`)
       .then((response) => response.json())
       .then((data) => setExpenses(data))
@@ -48,6 +44,15 @@ const ListExpenses = () => {
       return expenses;
     }
     return [...expenses].sort((a, b) => {
+      // Special handling for 'amount' to sort numerically
+      if (sortConfig.key === "amount") {
+        const amountA = parseFloat(a.amount.replace(/[$,]/g, ""));
+        const amountB = parseFloat(b.amount.replace(/[$,]/g, ""));
+        return sortConfig.direction === "ascending"
+          ? amountA - amountB
+          : amountB - amountA;
+      }
+      // Default sorting for other columns
       if (a[sortConfig.key] < b[sortConfig.key]) {
         return sortConfig.direction === "ascending" ? -1 : 1;
       }
@@ -56,6 +61,13 @@ const ListExpenses = () => {
       }
       return 0;
     });
+  };
+
+  const getSortIndicator = (key) => {
+    if (sortConfig.key === key) {
+      return sortConfig.direction === "ascending" ? " ↑" : " ↓";
+    }
+    return "";
   };
 
   const sortedExpenses = getSortedExpenses();
@@ -109,38 +121,13 @@ const ListExpenses = () => {
       <DateRangeSelector />
       <div className="list-expenses-container">
         {!isEditing ? (
-          <table className="list-expenses-table">
-            <thead>
-              <tr>
-                <th
-                  className="date-column"
-                  onClick={() => sortExpenses("date")}
-                >
-                  Date
-                </th>
-                <th onClick={() => sortExpenses("description")}>Description</th>
-                <th onClick={() => sortExpenses("amount")}>Amount</th>
-                <th className="actions-column">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedExpenses.map((expense) => (
-                <tr key={expense.id}>
-                  <td className="date-column">{expense.date}</td>
-                  <td>{expense.description}</td>
-                  <td>${expense.amount}</td>
-                  <td className="actions-column">
-                    <button onClick={() => handleEditClick(expense)}>
-                      Edit
-                    </button>
-                    <button onClick={(e) => handleDelete(e, expense.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ExpensesTable
+            expenses={sortedExpenses}
+            sortExpenses={sortExpenses}
+            getSortIndicator={getSortIndicator}
+            handleEditClick={handleEditClick}
+            handleDelete={handleDelete}
+          />
         ) : (
           <ExpenseEntry
             expenseData={selectedExpense}
