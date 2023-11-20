@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import ExpenseEntry from "./ExpenseEntry";
-import { DateRangeContext } from "./DateRangeContext";
-import DateRangeSelector from "./DateRangeSelector";
+import { DateRangeContext } from "../DateRangeContext";
+import DateRangeSelector from "../DateRangeSelector";
 import "./ListExpenses.css";
 import ExpensesTable from "./ExpensesTable";
 
