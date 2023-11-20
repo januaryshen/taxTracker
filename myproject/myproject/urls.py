@@ -25,8 +25,4 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('myapp.urls')),  # Include URL patterns from myapp
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    re_path(r'^$', RedirectView.as_view(url='/api/', permanent=False)), # Redirect root to /api/
-
 ]
