@@ -1,19 +1,21 @@
+// src/App.js
 import React from 'react';
-import MapSelector from './components/MapSelector';
-import ExpenseForm from './components/ExpenseForm';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Home from './components/Home';
+import OtherExpenses from './components/OtherExpenses.js';
+import Mileage from './components/Mileage';
 
 function App() {
-    const handleLocationsSelected = (departure, arrival) => {
-        // Your existing logic here, for example:
-        console.log("Departure:", departure, "Arrival:", arrival);
-    };
-
     return (
-        <div className="App">
-            <h1>Expense Tracker</h1>
-            <MapSelector onLocationsSelected={handleLocationsSelected} />
-            <ExpenseForm /* ...props */ />
-        </div>
+        <Router>
+            <NavBar />
+            <Routes>
+                <Route path="/" exact component={Home} />
+                <Route path="/expenses" component={OtherExpenses} />
+                <Route path="/mileage" component={Mileage} />
+            </Routes>
+        </Router>
     );
 }
 
