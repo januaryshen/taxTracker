@@ -5,8 +5,10 @@ from .models import MileageData, OtherExpenses, User
 from .serializers import OtherExpensesSerializer, UserSerializer, MileageDataSerializer
 import requests
 from django.conf import settings
+from rest_framework.permissions import IsAuthenticated
 
 class GenericAPIView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = None
     queryset = None
 
