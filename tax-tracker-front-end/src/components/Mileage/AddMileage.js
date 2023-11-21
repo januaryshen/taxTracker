@@ -80,6 +80,7 @@ const AddMileage = () => {
         }
         onSubmit={handleSubmit}
         onCancel={handleCancel}
+        showCancel={false}
       />
     </div>
   );

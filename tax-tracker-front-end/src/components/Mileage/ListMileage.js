@@ -151,6 +151,7 @@ const ListMileage = () => {
             onChange={handleChange}
             onSubmit={handleUpdate}
             onCancel={handleCancel}
+            showCancel={true}
           />
         )}
       </div>
