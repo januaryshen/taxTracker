@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React, { useContext } from "react";
 import DateRangeSelector from "./Context/DateRangeSelector";
 import ParticlesComponent from "./ParticlesComponent";
 import { DateRangeContext } from "./Context/DateRangeContext";
-import "./Home.css";
+import "./DownloadCSV.css";
 
-const Home = () => {
+const DownloadCSV = () => {
   const { startDate, endDate } = useContext(DateRangeContext);
 
   const fetchMileageData = async () => {
@@ -25,10 +25,8 @@ const Home = () => {
 
   const convertToCSV = (data, headers) => {
     let csvContent = "data:text/csv;charset=utf-8,";
-
     // Add headers
     csvContent += headers.map((header) => `"${header}"`).join(",") + "\n";
-
     // Add data rows
     data.forEach((row) => {
       const rowData = headers
@@ -44,10 +42,15 @@ const Home = () => {
     const { mileageData } = await fetchMileageData();
     const headers = [
       "id",
+      "user",
       "date",
       "departure_location",
       "arrival_location",
       "mileage",
+      "departure_lat",
+      "departure_lng",
+      "arrival_lat",
+      "arrival_lng"
     ];
     const csvContent = convertToCSV(mileageData, headers);
     downloadCSV(csvContent, "mileage_data.csv");
@@ -55,7 +58,7 @@ const Home = () => {
 
   const handleDownloadExpenses = async () => {
     const { expensesData } = await fetchExpenseData();
-    const headers = ["id", "date", "description", "amount"];
+    const headers = ["id","user", "date", "description", "amount"];
     const csvContent = convertToCSV(expensesData, headers);
     downloadCSV(csvContent, "expenses_data.csv");
   };
@@ -87,4 +90,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default DownloadCSV;

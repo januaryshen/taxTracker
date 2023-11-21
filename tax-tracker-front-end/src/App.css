@@ -1,13 +1,32 @@
-@keyframes moveGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@import url("https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap");
+
+* {
+  font-family: "Gill Sans", sans-serif;
 }
 
-.dynamic-background {
-  animation: moveGradient 10s ease infinite;
-  background: linear-gradient(45deg, #6dd5ed, #2193b0, #6dd5ed);
-  background-size: 200% 200%;
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
+button {
+  background-color: #3498db; /* A pleasant blue */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-right: 10px; /* Spacing between buttons */
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+}
+
+button:hover {
+  background-color: #4caf50;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
