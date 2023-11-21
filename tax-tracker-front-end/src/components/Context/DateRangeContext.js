@@ -6,7 +6,7 @@ export const DateRangeProvider = ({ children }) => {
   const today = new Date();
   const twoMonthsAgo = new Date(
     today.getFullYear(),
-    today.getMonth() - 2,
+    today.getMonth() - 3,
     today.getDate()
   );
 
