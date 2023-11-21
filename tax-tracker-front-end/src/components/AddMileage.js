@@ -1,32 +1,38 @@
-import React, { useState, useEffect, useContext } from 'react';
-import MileageEntry from './MileageEntry';
-import { MileageContext } from './MileageContext';
+import React, { useState, useEffect, useContext } from "react";
+import MileageEntry from "./MileageEntry";
+import { MileageContext } from "./MileageContext";
 
 const AddMileage = () => {
   const today = new Date().toISOString().split("T")[0];
   const [mileageData, setMileageData] = useState({
     user: 1,
     date: today,
-    arrival_location: "",
+    departure_lat: "",
+    departure_lng: "",
     departure_location: "",
-    mileage: "",
+    arrival_lat: "",
+    arrival_lng: "",
+    arrival_location: "",
   });
 
-  const { departureLocation, arrivalLocation } = useContext(MileageContext);
+  const { locations } = useContext(MileageContext);
 
-  // Update mileageData when the departure or arrival locations change
   useEffect(() => {
-    if (departureLocation) {
-      setMileageData(m => ({ ...m, departure_location: JSON.stringify(departureLocation) }));
+    if (locations.departure && locations.arrival) {
+      setMileageData((m) => ({
+        ...m,
+        departure_lat: locations.departure.lat,
+        departure_lng: locations.departure.lng,
+        departure_location: locations.departure.address,
+        arrival_lat: locations.arrival.lat,
+        arrival_lng: locations.arrival.lng,
+        arrival_location: locations.arrival.address,
+      }));
     }
-    if (arrivalLocation) {
-      setMileageData(m => ({ ...m, arrival_location: JSON.stringify(arrivalLocation) }));
-    }
-  }, [departureLocation, arrivalLocation]);
+  }, [locations]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Make sure to update this fetch call with the correct endpoint and setup
     fetch("http://127.0.0.1:8000/api/mileage/", {
       method: "POST",
       headers: {

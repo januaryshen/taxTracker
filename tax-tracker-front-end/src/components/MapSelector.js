@@ -13,6 +13,8 @@ import {
 } from "@react-google-maps/api";
 import { MileageContext } from "./MileageContext";
 
+const libraries = ["places"];
+
 const MapSelector = () => {
   const { setDeparture, setArrival } = useContext(MileageContext);
   const [mapRef, setMapRef] = useState(null);
@@ -32,23 +34,26 @@ const MapSelector = () => {
     if (searchBoxRef.current) {
       const places = searchBoxRef.current.getPlaces();
       if (places && places.length > 0) {
-        const location = places[0].geometry.location;
-        const latLng = {
-          lat: location.lat(),
-          lng: location.lng(),
+        const place = places[0];
+        const location = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+          address: place.formatted_address // Getting the address string
         };
-        mapRef.panTo(latLng);
+
+        mapRef.panTo(new window.google.maps.LatLng(location.lat, location.lng));
 
         if (isDeparture) {
-          setDeparture(latLng);
-          setDepartureMarker(latLng);
+          setDeparture(location);
+          setDepartureMarker(location);
         } else {
-          setArrival(latLng);
-          setArrivalMarker(latLng);
+          setArrival(location);
+          setArrivalMarker(location);
         }
       }
     }
   };
+
   const updateBounds = useCallback(() => {
     if (mapRef && (departureMarker || arrivalMarker)) {
       const bounds = new window.google.maps.LatLngBounds();
@@ -73,18 +78,16 @@ const MapSelector = () => {
     updateBounds();
   }, [updateBounds]);
 
-
   return (
     <LoadScript
       googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-      libraries={["places"]}
+      libraries={libraries}
     >
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={12}
         onLoad={(map) => setMapRef(map)}
-        // onClick={onMapClick}
       >
         {/* Departure Search Box */}
         <div

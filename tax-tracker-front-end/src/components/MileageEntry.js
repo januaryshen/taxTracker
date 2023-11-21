@@ -6,7 +6,7 @@ import MapSelector from "./MapSelector";
 const MileageEntry = ({ mileageData, onChange, onSubmit }) => {
 
   return (
-    <form onSubmit={onSubmit} className="expense-entry-form">
+    <form onSubmit={onSubmit} className="mileage-entry-form">
       <label>
         Date:
         <input
@@ -17,7 +17,7 @@ const MileageEntry = ({ mileageData, onChange, onSubmit }) => {
         />
       </label>
       <MapSelector />
-      <div className="expense-entry-buttons">
+      <div className="mileage-entry-buttons">
         <button type="submit">Submit</button>
       </div>
     </form>
