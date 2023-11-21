@@ -6,17 +6,20 @@ import Home from "./components/Home";
 import Expenses from "./components/Expenses/Expenses";
 import Mileage from "./components/Mileage";
 import { DateRangeProvider } from "./components/DateRangeContext";
+import { MileageProvider } from "./components/MileageContext";
 
 const App = () => {
   return (
     <Router>
       <NavBar />
       <DateRangeProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/expenses" element={<Expenses />} />
-          <Route path="/mileage" element={<Mileage />} />
-        </Routes>
+        <MileageProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/expenses" element={<Expenses />} />
+            <Route path="/mileage" element={<Mileage />} />
+          </Routes>
+        </MileageProvider>
       </DateRangeProvider>
     </Router>
   );

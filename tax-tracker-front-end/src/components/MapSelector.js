@@ -1,80 +1,153 @@
-// src/components/MapSelector.js
-import React, { useState, useRef, useCallback } from 'react';
-import { GoogleMap, LoadScript, Marker, StandaloneSearchBox } from '@react-google-maps/api';
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  StandaloneSearchBox,
+} from "@react-google-maps/api";
+import { MileageContext } from "./MileageContext";
 
-const MapSelector = ({ onLocationsSelected }) => {
-    const [markers, setMarkers] = useState([]);
-    const searchBoxRef = useRef();
+const MapSelector = () => {
+  const { setDeparture, setArrival } = useContext(MileageContext);
+  const [mapRef, setMapRef] = useState(null);
+  const departureSearchBoxRef = useRef(null); // Corrected to useRef
+  const arrivalSearchBoxRef = useRef(null); // Corrected to useRef
+  const [departureMarker, setDepartureMarker] = useState(null);
+  const [arrivalMarker, setArrivalMarker] = useState(null);
 
-    const mapContainerStyle = {
-        height: "400px",
-        width: "800px"
-    };
+  const mapContainerStyle = {
+    height: "400px",
+    width: "800px",
+  };
 
-    const center = { lat: 47.6101, lng: -122.2015 }; // Bellevue, WA
+  const center = { lat: 47.6101, lng: -122.2015 }; // Default center (Bellevue, WA)
 
-    const onMapClick = useCallback((event) => {
-        const newMarkers = [
-            { lat: event.latLng.lat(), lng: event.latLng.lng() }
-        ];
-        setMarkers(newMarkers);
-        onLocationsSelected(newMarkers[0]);
-    }, [onLocationsSelected]);
+  const handlePlacesChanged = (searchBoxRef, isDeparture) => {
+    if (searchBoxRef.current) {
+      const places = searchBoxRef.current.getPlaces();
+      if (places && places.length > 0) {
+        const location = places[0].geometry.location;
+        const latLng = {
+          lat: location.lat(),
+          lng: location.lng(),
+        };
+        mapRef.panTo(latLng);
 
-    const onLoad = useCallback((ref) => {
-        searchBoxRef.current = ref;
-    }, []);
-
-    const onPlacesChanged = () => {
-        const places = searchBoxRef.current.getPlaces();
-        const bounds = new window.google.maps.LatLngBounds();
-
-        places.forEach(place => {
-            if (place.geometry.viewport) {
-                bounds.union(place.geometry.viewport);
-            } else {
-                bounds.extend(place.geometry.location);
-            }
-        });
-
-        const nextMarkers = places.map(place => ({
-            lat: place.geometry.location.lat(),
-            lng: place.geometry.location.lng()
-        }));
-
-        if (nextMarkers.length > 0) {
-            setMarkers(nextMarkers);
-            onLocationsSelected(nextMarkers[0]);
+        if (isDeparture) {
+          setDeparture(latLng);
+          setDepartureMarker(latLng);
+        } else {
+          setArrival(latLng);
+          setArrivalMarker(latLng);
         }
-    };
+      }
+    }
+  };
+  const updateBounds = useCallback(() => {
+    if (mapRef && (departureMarker || arrivalMarker)) {
+      const bounds = new window.google.maps.LatLngBounds();
+      if (departureMarker) {
+        bounds.extend(
+          new window.google.maps.LatLng(
+            departureMarker.lat,
+            departureMarker.lng
+          )
+        );
+      }
+      if (arrivalMarker) {
+        bounds.extend(
+          new window.google.maps.LatLng(arrivalMarker.lat, arrivalMarker.lng)
+        );
+      }
+      mapRef.fitBounds(bounds);
+    }
+  }, [mapRef, departureMarker, arrivalMarker]);
 
-    return (
-        <LoadScript
-            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-            libraries={["places"]}
+  useEffect(() => {
+    updateBounds();
+  }, [updateBounds]);
+
+
+  return (
+    <LoadScript
+      googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+      libraries={["places"]}
+    >
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={center}
+        zoom={12}
+        onLoad={(map) => setMapRef(map)}
+        // onClick={onMapClick}
+      >
+        {/* Departure Search Box */}
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
         >
-            <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                center={center}
-                zoom={12}
-                onClick={onMapClick}
-            >
-                <StandaloneSearchBox
-                    onLoad={onLoad}
-                    onPlacesChanged={onPlacesChanged}
-                >
-                    <input
-                        type="text"
-                        placeholder="Search Google Maps"
-                        style={{ boxSizing: `border-box`, border: `1px solid transparent`, width: `240px`, height: `32px`, padding: `0 12px`, borderRadius: `3px`, boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`, fontSize: `14px`, outline: `none`, textOverflow: `ellipses`, position: "absolute", top: "10px", left: "50%", marginLeft: "-120px" }}
-                    />
-                </StandaloneSearchBox>
-                {markers.map((marker, idx) => (
-                    <Marker key={idx} position={{ lat: marker.lat, lng: marker.lng }} />
-                ))}
-            </GoogleMap>
-        </LoadScript>
-    );
+          <StandaloneSearchBox
+            onLoad={(ref) => (departureSearchBoxRef.current = ref)}
+            onPlacesChanged={() =>
+              handlePlacesChanged(departureSearchBoxRef, true)
+            }
+          >
+            <input
+              type="text"
+              placeholder="Enter departure location"
+              style={{ width: "240px", height: "32px" }}
+            />
+          </StandaloneSearchBox>
+        </div>
+
+        {/* Arrival Search Box */}
+        <div
+          style={{
+            position: "absolute",
+            top: "50px",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          <StandaloneSearchBox
+            onLoad={(ref) => (arrivalSearchBoxRef.current = ref)}
+            onPlacesChanged={() =>
+              handlePlacesChanged(arrivalSearchBoxRef, false)
+            }
+          >
+            <input
+              type="text"
+              placeholder="Enter arrival location"
+              style={{ width: "240px", height: "32px" }}
+            />
+          </StandaloneSearchBox>
+        </div>
+
+        {/* Departure Marker */}
+        {departureMarker && (
+          <Marker
+            position={{ lat: departureMarker.lat, lng: departureMarker.lng }}
+          />
+        )}
+
+        {/* Arrival Marker */}
+        {arrivalMarker && (
+          <Marker
+            position={{ lat: arrivalMarker.lat, lng: arrivalMarker.lng }}
+          />
+        )}
+      </GoogleMap>
+    </LoadScript>
+  );
 };
 
 export default MapSelector;
