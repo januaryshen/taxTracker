@@ -75,16 +75,21 @@ class MileageDataAPIView(GenericAPIView):
     serializer_class = MileageDataSerializer
 
     def post(self, request, *args, **kwargs):
-        departure_location = request.data.get('departure_location')
-        arrival_location = request.data.get('arrival_location')
+        departure_lat = request.data.get('departure_lat')
+        departure_lng = request.data.get('departure_lng')
+        arrival_lat = request.data.get('arrival_lat')
+        arrival_lng = request.data.get('arrival_lng')
 
-        if departure_location and arrival_location:
+        if departure_lat and departure_lng and arrival_lat and arrival_lng:
+            # Format the lat/lng for Google Maps API
+            origin = f"{departure_lat},{departure_lng}"
+            destination = f"{arrival_lat},{arrival_lng}"
+
             # Call Google Maps API to get mileage
-            distance = self.get_mileage_from_google_maps(departure_location, arrival_location)
+            distance = self.get_mileage_from_google_maps(origin, destination)
             if distance is None:
                 return Response({"error": "Could not calculate mileage"}, status=status.HTTP_400_BAD_REQUEST)
             request.data['mileage'] = distance
-
         return super().post(request, *args, **kwargs)
 
     def get_mileage_from_google_maps(self, origin, destination):
@@ -102,7 +107,6 @@ class MileageDataAPIView(GenericAPIView):
         if response.status_code == 200:
             data = response.json()
             # Extract distance from response
-            print(data)
             distance = data['rows'][0]['elements'][0]['distance']['value']  # value in meters
             return distance / 1000.0  # convert to kilometers if needed
         return None

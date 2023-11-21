@@ -7,8 +7,12 @@ class User(models.Model):
 class MileageData(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField()
-    departure_location = models.CharField(max_length=200)
-    arrival_location = models.CharField(max_length=200)
+    departure_location = models.CharField(max_length=255)
+    arrival_location = models.CharField(max_length=255)
+    departure_lat = models.FloatField()
+    departure_lng = models.FloatField()
+    arrival_lat = models.FloatField()
+    arrival_lng = models.FloatField()
     mileage = models.FloatField()
 
 class OtherExpenses(models.Model):

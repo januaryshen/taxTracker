@@ -14,4 +14,4 @@ class UserSerializer(serializers.ModelSerializer):
 class MileageDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = MileageData
-        fields = ['user', 'date', 'departure_location', 'arrival_location', 'mileage']
+        fields = ['user', 'date', 'departure_location', 'arrival_location', 'mileage', 'departure_lat', 'departure_lng', 'arrival_lat', 'arrival_lng']

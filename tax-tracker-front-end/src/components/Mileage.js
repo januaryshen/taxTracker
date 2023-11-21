@@ -4,7 +4,6 @@ import AddMileage from "./AddMileage";
 function Mileage() {
   return (
     <>
-      <div>Mileage Content</div>
       <AddMileage />
     </>
   );
