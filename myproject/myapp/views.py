@@ -91,7 +91,42 @@ class MileageDataAPIView(GenericAPIView):
                 return Response({"error": "Could not calculate mileage"}, status=status.HTTP_400_BAD_REQUEST)
             request.data['mileage'] = distance
         return super().post(request, *args, **kwargs)
+    
+    def patch(self, request, *args, **kwargs):
+        mileage_instance = self.get_object()
+        data = request.data
 
+        # Check if either location has changed
+        locations_changed = (
+            data.get('departure_location') != mileage_instance.departure_location or
+            data.get('arrival_location') != mileage_instance.arrival_location
+        )
+
+        # Recalculate mileage if locations have changed
+        if locations_changed:
+            # Extract lat/lng from request data
+            departure_lat = data.get('departure_lat')
+            departure_lng = data.get('departure_lng')
+            arrival_lat = data.get('arrival_lat')
+            arrival_lng = data.get('arrival_lng')
+
+            if departure_lat and departure_lng and arrival_lat and arrival_lng:
+                # Format the lat/lng for Google Maps API
+                origin = f"{departure_lat},{departure_lng}"
+                destination = f"{arrival_lat},{arrival_lng}"
+
+                # Call Google Maps API to get mileage
+                distance = self.get_mileage_from_google_maps(origin, destination)
+                if distance is not None:
+                    data['mileage'] = distance
+
+        # Proceed with the usual update
+        serializer = self.get_serializer(mileage_instance, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     def get_mileage_from_google_maps(self, origin, destination):
         api_key = settings.GOOGLE_MAPS_API_KEY  # Ensure this is added in your settings
         url = "https://maps.googleapis.com/maps/api/distancematrix/json"
