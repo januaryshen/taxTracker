@@ -1,155 +1,108 @@
-import React, {
-  useContext,
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-} from "react";
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  StandaloneSearchBox,
-} from "@react-google-maps/api";
+import React, { useContext, useState, useRef, useEffect } from "react";
+import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
 import { MileageContext } from "./MileageContext";
+import "./MapSelector.css";
 
-const libraries = ["places"];
-
-const MapSelector = () => {
+const MapSelector = ({ selectedMileage }) => {
   const { setDeparture, setArrival } = useContext(MileageContext);
   const [mapRef, setMapRef] = useState(null);
-  const departureSearchBoxRef = useRef(null); // Corrected to useRef
-  const arrivalSearchBoxRef = useRef(null); // Corrected to useRef
-  const [departureMarker, setDepartureMarker] = useState(null);
-  const [arrivalMarker, setArrivalMarker] = useState(null);
+  const [markers, setMarkers] = useState({});
+  const departureSearchBoxRef = useRef(null);
+  const arrivalSearchBoxRef = useRef(null);
+
+  useEffect(() => {
+    // Set initial markers based on selected mileage entry
+    if (selectedMileage) {
+      setMarkers({
+        departure: {
+          lat: selectedMileage.departure_lat,
+          lng: selectedMileage.departure_lng,
+          address: selectedMileage.departure_location
+        },
+        arrival: {
+          lat: selectedMileage.arrival_lat,
+          lng: selectedMileage.arrival_lng,
+          address: selectedMileage.arrival_location
+        }
+      });
+    }
+  }, [selectedMileage]);
 
   const mapContainerStyle = {
-    height: "400px",
-    width: "800px",
+    height: "40vh",
+    width: "90vw",
   };
 
   const center = { lat: 47.6101, lng: -122.2015 }; // Default center (Bellevue, WA)
 
   const handlePlacesChanged = (searchBoxRef, isDeparture) => {
-    if (searchBoxRef.current) {
-      const places = searchBoxRef.current.getPlaces();
-      if (places && places.length > 0) {
-        const place = places[0];
-        const location = {
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
-          address: place.formatted_address // Getting the address string
-        };
+    const places = searchBoxRef.current.getPlaces();
+    if (places && places.length > 0) {
+      const place = places[0];
+      const location = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+        address: place.formatted_address
+      };
 
-        mapRef.panTo(new window.google.maps.LatLng(location.lat, location.lng));
-
-        if (isDeparture) {
-          setDeparture(location);
-          setDepartureMarker(location);
-        } else {
-          setArrival(location);
-          setArrivalMarker(location);
-        }
+      mapRef.panTo(new window.google.maps.LatLng(location.lat, location.lng));
+      updateMarker(location, isDeparture);
+      
+      // Update context with new location data
+      if (isDeparture) {
+        setDeparture(location);
+      } else {
+        setArrival(location);
       }
     }
   };
 
-  const updateBounds = useCallback(() => {
-    if (mapRef && (departureMarker || arrivalMarker)) {
-      const bounds = new window.google.maps.LatLngBounds();
-      if (departureMarker) {
-        bounds.extend(
-          new window.google.maps.LatLng(
-            departureMarker.lat,
-            departureMarker.lng
-          )
-        );
-      }
-      if (arrivalMarker) {
-        bounds.extend(
-          new window.google.maps.LatLng(arrivalMarker.lat, arrivalMarker.lng)
-        );
-      }
-      mapRef.fitBounds(bounds);
-    }
-  }, [mapRef, departureMarker, arrivalMarker]);
+  const updateMarker = (location, isDeparture) => {
+    setMarkers(prevMarkers => ({
+      ...prevMarkers,
+      [isDeparture ? 'departure' : 'arrival']: location
+    }));
+  };
 
-  useEffect(() => {
-    updateBounds();
-  }, [updateBounds]);
+  const renderSearchBox = (ref, placeholder, onPlacesChanged) => (
+    <StandaloneSearchBox
+      onLoad={(searchBox) => (ref.current = searchBox)}
+      onPlacesChanged={onPlacesChanged}
+    >
+      <input
+        type="text"
+        placeholder={placeholder}
+        style={{ width: "240px", height: "32px" }}
+      />
+    </StandaloneSearchBox>
+  );
 
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-      libraries={libraries}
-    >
+    <div className="map-container">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={12}
-        onLoad={(map) => setMapRef(map)}
+        onLoad={setMapRef}
       >
-        {/* Departure Search Box */}
-        <div
-          style={{
-            position: "absolute",
-            top: "10px",
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          <StandaloneSearchBox
-            onLoad={(ref) => (departureSearchBoxRef.current = ref)}
-            onPlacesChanged={() =>
-              handlePlacesChanged(departureSearchBoxRef, true)
-            }
-          >
-            <input
-              type="text"
-              placeholder="Enter departure location"
-              style={{ width: "240px", height: "32px" }}
-            />
-          </StandaloneSearchBox>
+        <div className="search-box" style={{ top: "10px" }}>
+          {renderSearchBox(
+            departureSearchBoxRef,
+            "Enter departure location",
+            () => handlePlacesChanged(departureSearchBoxRef, true)
+          )}
         </div>
-
-        {/* Arrival Search Box */}
-        <div
-          style={{
-            position: "absolute",
-            top: "50px",
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          <StandaloneSearchBox
-            onLoad={(ref) => (arrivalSearchBoxRef.current = ref)}
-            onPlacesChanged={() =>
-              handlePlacesChanged(arrivalSearchBoxRef, false)
-            }
-          >
-            <input
-              type="text"
-              placeholder="Enter arrival location"
-              style={{ width: "240px", height: "32px" }}
-            />
-          </StandaloneSearchBox>
+        <div className="search-box" style={{ top: "50px" }}>
+          {renderSearchBox(
+            arrivalSearchBoxRef,
+            "Enter arrival location",
+            () => handlePlacesChanged(arrivalSearchBoxRef, false)
+          )}
         </div>
-
-        {/* Departure Marker */}
-        {departureMarker && (
-          <Marker
-            position={{ lat: departureMarker.lat, lng: departureMarker.lng }}
-          />
-        )}
-
-        {/* Arrival Marker */}
-        {arrivalMarker && (
-          <Marker
-            position={{ lat: arrivalMarker.lat, lng: arrivalMarker.lng }}
-          />
-        )}
+        {markers.departure && <Marker position={markers.departure} />}
+        {markers.arrival && <Marker position={markers.arrival} />}
       </GoogleMap>
-    </LoadScript>
+    </div>
   );
 };
 

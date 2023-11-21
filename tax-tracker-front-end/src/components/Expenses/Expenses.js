@@ -4,7 +4,7 @@ import ListExpenses from "./ListExpenses";
 import AddExpenses from "./AddExpenses";
 import "./Expenses.css"; // Import the CSS file
 
-function Expenses() {
+const Expenses = () => {
   const [isAdd, setIsAdd] = useState(true);
 
   return (
@@ -26,6 +26,6 @@ function Expenses() {
       {isAdd ? <AddExpenses /> : <ListExpenses />}
     </>
   );
-}
+};
 
 export default Expenses;

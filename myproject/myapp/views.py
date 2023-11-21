@@ -15,7 +15,7 @@ class GenericAPIView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         if 'pk' in kwargs:
             # Get a single item
-            item = get_object_or_404(self.get_queryset(), pk=kwargs['pk'])
+            item = generics.get_object_or_404(self.get_queryset(), pk=kwargs['pk'])
             serializer = self.get_serializer(item)
         else:
             # List items
