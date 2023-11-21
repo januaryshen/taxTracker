@@ -22,7 +22,7 @@ const ListMileage = () => {
     fetchMileage();
     console.log("locations", locations)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startDate, endDate, locations]);
+  }, [startDate, endDate]);
 
   const fetchMileage = () => {
     const queryString = new URLSearchParams({

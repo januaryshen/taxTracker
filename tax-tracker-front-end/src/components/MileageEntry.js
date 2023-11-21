@@ -1,40 +1,41 @@
-// src/components/MileageEntry.js
 import React from "react";
 import "./MileageEntry.css";
 import MapSelector from "./MapSelector";
 
 const MileageEntry = ({ mileageData, onChange, onSubmit, onCancel }) => {
-  console.log("mileage data", mileageData);
   return (
     <form onSubmit={onSubmit} className="mileage-entry-form">
-      <label>
-        Date:
+      <div className="form-group">
+        <label htmlFor="date">Date:</label>
         <input
           type="date"
           name="date"
+          id="date"
           value={mileageData.date}
           onChange={onChange}
+          className="form-control"
         />
-      </label>
+      </div>
 
-      <MapSelector
-        initialDeparture={{
-          lat: mileageData.departure_lat,
-          lng: mileageData.departure_lng,
-          address: mileageData.address,
-        }}
-        initialArrival={{
-          lat: mileageData.arrival_lat,
-          lng: mileageData.arrival_lng,
-          address: mileageData.address,
-        }}
-      />
+      <div className="form-group">
+        <strong>Departure Location: </strong>
+        <span>{mileageData.departure_location || "Not set"}</span>
+      </div>
+
+      <div className="form-group">
+        <strong>Arrival Location: </strong>
+        <span>{mileageData.arrival_location || "Not set"}</span>
+      </div>
+
       <div className="mileage-entry-buttons">
-        <button type="button" onClick={onCancel}>
+        <button type="button" onClick={onCancel} className="btn btn-secondary">
           Cancel
         </button>
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
       </div>
+      <MapSelector selectedMileage={mileageData} />
     </form>
   );
 };

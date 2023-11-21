@@ -21,11 +21,23 @@
     margin: 0 5px;
   }
   
-  .expense-entry-buttons {
+  .form-group {
+    margin-bottom: 10px;
+  }
+  
+  .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group span {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  .mileage-entry-buttons {
     text-align: center; /* Aligns the buttons container content to the center */
-    margin-top: 20px; /* Adds some space above the buttons */
-}
-
+  }
+  
   .mileage-entry-buttons button {
     padding: 10px 15px;
     background-color: #7FB3D5;
@@ -34,8 +46,7 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-align: center; /* Aligns the buttons container content to the center */
-    margin-top: 20px; /* Adds some space above the buttons */
+    margin: 0 5px; /* Adds margin to the left and right of each button */
   }
   
   .mileage-entry-buttons button:hover {
