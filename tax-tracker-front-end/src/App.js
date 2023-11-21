@@ -11,23 +11,25 @@ import { LoadScript } from "@react-google-maps/api";
 
 const App = () => {
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-      libraries={["places"]}
-    >
-      <Router>
-        <NavBar />
-        <DateRangeProvider>
-          <MileageProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/expenses" element={<Expenses />} />
-              <Route path="/mileage" element={<Mileage />} />
-            </Routes>
-          </MileageProvider>
-        </DateRangeProvider>
-      </Router>
-    </LoadScript>
+    <div className="dynamic-background">
+      <LoadScript
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        libraries={["places"]}
+      >
+        <Router>
+          <NavBar />
+          <DateRangeProvider>
+            <MileageProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/expenses" element={<Expenses />} />
+                <Route path="/mileage" element={<Mileage />} />
+              </Routes>
+            </MileageProvider>
+          </DateRangeProvider>
+        </Router>
+      </LoadScript>
+    </div>
   );
 };
 

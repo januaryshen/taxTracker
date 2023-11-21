@@ -45,8 +45,6 @@ const AddMileage = () => {
       arrival_location: locations.arrival?.address,
     };
 
-    console.log("Submitting mileage data:", updatedMileageData);
-
     fetch("http://127.0.0.1:8000/api/mileage/", {
       method: "POST",
       headers: {

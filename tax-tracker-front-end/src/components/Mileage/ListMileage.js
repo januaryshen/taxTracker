@@ -20,7 +20,6 @@ const ListMileage = () => {
 
   useEffect(() => {
     fetchMileage();
-    console.log("locations", locations);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
