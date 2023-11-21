@@ -1,13 +1,9 @@
 .add-mileage-container {
-    margin: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .add-mileage-container h2 {
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-  }
+  margin: 20px;
+}
+
+.add-mileage-container h2 {
+  color: #ffc107;
+  margin-bottom: 15px;
+  text-align: center;
+}

@@ -1,6 +1,13 @@
-body {
-    background-color: #1F2A38;
-    margin: 0; /* Removes default margin */
-    padding: 0; /* Removes default padding */
-    font-family: "Gill Sans", sans-serif; /* Sets the default font for the app */
-  }
+.mileage-container {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.mileage-container .button:hover {
+    background-color: #FF1493;
+}
+
+.mileage-container .button.active {
+    background-color: #FF1493;
+    font-weight: bold;
+}

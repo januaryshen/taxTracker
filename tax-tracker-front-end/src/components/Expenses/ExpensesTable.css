@@ -3,7 +3,9 @@
 .list-expenses-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: "Roboto", sans-serif;
+  max-width: 800px;
+  margin: 10px auto;
+  background-color: #f8f8f8;
 }
 
 .list-expenses-table thead {
@@ -18,7 +20,8 @@
 .list-expenses-table th,
 .list-expenses-table td {
   border: 1px solid #ddd;
-  font-weight: normal;
+  padding: 3px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
 .list-expenses-table tr:nth-child(even) {
@@ -34,6 +37,7 @@
   border-radius: 0px;
   cursor: pointer;
   padding: 2px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
 .date-column {

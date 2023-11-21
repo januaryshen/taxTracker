@@ -119,7 +119,7 @@ const ListExpenses = () => {
   return (
     <>
       <DateRangeSelector />
-      <div className="list-expenses-container">
+      <div>
         {!isEditing ? (
           <ExpensesTable
             expenses={sortedExpenses}
@@ -129,13 +129,16 @@ const ListExpenses = () => {
             handleDelete={handleDelete}
           />
         ) : (
-          <ExpenseEntry
-            expenseData={selectedExpense}
-            onChange={handleChange}
-            onSubmit={handleUpdate}
-            onCancel={handleCancel}
-            showCancel={true}
-          />
+          <>
+            <h2>Edit Expense</h2>
+            <ExpenseEntry
+              expenseData={selectedExpense}
+              onChange={handleChange}
+              onSubmit={handleUpdate}
+              onCancel={handleCancel}
+              showCancel={true}
+            />
+          </>
         )}
       </div>
     </>

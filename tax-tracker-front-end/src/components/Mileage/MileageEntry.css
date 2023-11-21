@@ -1,55 +1,34 @@
 .mileage-entry-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: auto; /* Centers the form */
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .mileage-entry-form label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .mileage-entry-form input[type="date"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 0 5px;
-  }
-  
-  .form-group {
-    margin-bottom: 10px;
-  }
-  
-  .form-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .form-group span {
-    display: inline-block;
-    margin-left: 5px;
-  }
-  .mileage-entry-buttons {
-    text-align: center; /* Aligns the buttons container content to the center */
-  }
-  
-  .mileage-entry-buttons button {
-    padding: 10px 15px;
-    background-color: #7FB3D5;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 0 5px; /* Adds margin to the left and right of each button */
-  }
-  
-  .mileage-entry-buttons button:hover {
-    background-color: #3E5F7D;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: auto; /* Centers the form */
+  padding: 20px;
+  font-weight: normal;
+  color: #FFE066;
+}
+
+.mileage-entry-form label {
+  font-weight: bold;
+}
+
+.mileage-entry-form input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 5px;
+}
+
+.form-group p {
+  font-weight: bold;
+}
+
+.form-group span {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.mileage-entry-form button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

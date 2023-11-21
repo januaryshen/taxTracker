@@ -3,9 +3,6 @@
     text-align: center;
     margin: 0.5rem auto; /* Centers the element horizontally */
     padding: 0.5rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .date-range-selector form {

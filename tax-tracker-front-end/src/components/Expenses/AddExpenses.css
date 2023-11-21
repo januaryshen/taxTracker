@@ -1,16 +1,13 @@
 /* src/components/AddExpenses.css */
 
 .add-expenses-container {
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 5px;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    display: inline-block
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 5px;
+  display: inline-block;
 }
 
 .add-expenses-container h2 {
-    color: #333;
-    margin-bottom: 20px;
+  color: #ffc107;
+  margin-bottom: 15px;
 }
-

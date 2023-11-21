@@ -23,24 +23,23 @@ const MileageEntry = ({
         />
       </div>
       <div className="form-group">
-        <strong>Departure Location: </strong>
+        <p>Departure Location: </p>
         <span>{mileageData.departure_location || "Not set"}</span>
       </div>
       <div className="form-group">
-        <strong>Arrival Location: </strong>
+        <p>Arrival Location: </p>
         <span>{mileageData.arrival_location || "Not set"}</span>
       </div>
-      <div className="mileage-entry-buttons">
+      <div>
         {showCancel && (
           <button
             type="button"
             onClick={onCancel}
-            className="btn btn-secondary"
           >
             Cancel
           </button>
         )}
-        <button type="submit" className="btn btn-primary">
+        <button type="submit">
           Submit
         </button>
       </div>
