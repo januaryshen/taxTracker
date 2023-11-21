@@ -8,11 +8,15 @@ button {
   background-color: #3498db; /* A pleasant blue */
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 5px 10px;
-  margin-right: 10px; /* Spacing between buttons */
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+  margin-right: 10px; /* Adds space to the right of each button */
+}
+
+button:last-child {
+  margin-right: 0; /* Removes right margin from the last button */
 }
 
 button:hover {

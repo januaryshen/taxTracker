@@ -75,7 +75,7 @@ const DownloadCSV = () => {
   return (
     <div className="background">
       <ParticlesComponent />
-      <div className="home-container">
+      <div className="csv-container">
         <h1>新の工作相關支出</h1>
         <p>No tax is good tax.</p>
         <DateRangeSelector />
