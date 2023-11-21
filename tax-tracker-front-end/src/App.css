@@ -4,6 +4,13 @@
   font-family: "Gill Sans", sans-serif;
 }
 
+body {
+  background-color: #1f2a38;
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+  text-align: center;
+}
+
 button {
   background-color: #3498db; /* A pleasant blue */
   color: white;
@@ -20,7 +27,7 @@ button:last-child {
 }
 
 button:hover {
-  background-color: #4caf50;
+  background-color: #FF1493;
 }
 
 @keyframes moveGradient {

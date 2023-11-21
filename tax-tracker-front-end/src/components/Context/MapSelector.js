@@ -102,7 +102,7 @@ const MapSelector = ({ selectedMileage }) => {
   );
 
   return (
-    <div className="map-container">
+    <div className="map-selector-container">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}

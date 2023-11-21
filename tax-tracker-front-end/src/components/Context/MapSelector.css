@@ -1,9 +1,5 @@
   
-  .google-map {
-    height: 400px;
-    width: 100%;
-  }
-  
+
   .search-box {
     position: absolute;
     top: 10px;
@@ -18,18 +14,20 @@
     padding: 12px 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     font-size: 14px;
   }
-  
-  .search-box input:nth-child(2) {
-    margin-top: 10px;
+
+  .map-selector-container {
+    height: 60vh; /* This will take 60% of the viewport height */
+    width: 80vw; /* This will take 80% of the viewport width */
+    max-height: 500px; /* Maximum height */
+    max-width: 800px; /* Maximum width */
+    min-height: 300px; /* Minimum height */
+    min-width: 400px; /* Minimum width */
+    margin: auto; /* This centers the map in its parent container */
+    position: center; /* Needed for absolute positioning of children */
   }
   
-  .map-container {
-    position: center;
-    height: 60vh;
-}
   
   /* For smaller screens, adjust the size */
   @media (max-width: 768px) {

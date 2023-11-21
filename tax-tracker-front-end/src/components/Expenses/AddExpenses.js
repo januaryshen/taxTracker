@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ExpenseEntry from "./ExpenseEntry";
 import "./AddExpenses.css";
 
-function AddExpenses() {
+const AddExpenses = () => {
   const today = new Date().toISOString().split("T")[0];
   const [expenseData, setExpenseData] = useState({
     user: 1,
@@ -11,6 +11,7 @@ function AddExpenses() {
     description: "",
     amount: "",
   });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch("http://127.0.0.1:8000/api/expenses/", {
@@ -20,13 +21,19 @@ function AddExpenses() {
       },
       body: JSON.stringify(expenseData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("Success:", data);
         alert("Transaction added successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
+        alert("Failed to add transaction. Please try again.");
       });
   };
 

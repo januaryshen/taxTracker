@@ -6,7 +6,7 @@ const Mileage = () => {
     const [isAdd, setIsAdd] = useState(true);
     return (
         <>
-          <div className="expenses-container">
+          <div >
             <button
               className={`button ${isAdd ? "active" : ""}`}
               onClick={() => setIsAdd(true)}
