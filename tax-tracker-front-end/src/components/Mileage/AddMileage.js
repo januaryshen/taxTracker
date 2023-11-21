@@ -52,13 +52,19 @@ const AddMileage = () => {
       },
       body: JSON.stringify(updatedMileageData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("Success:", data);
-        // Reset or update the form state as needed after successful submission
+        alert("Mileage added successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
+        alert("Failed to add mileage. Please try again.");
       });
   };
 

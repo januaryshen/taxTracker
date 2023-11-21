@@ -2,7 +2,13 @@
 import React from "react";
 import "./ExpenseEntry.css";
 
-const ExpenseEntry = ({ expenseData, onChange, onSubmit, onCancel }) => {
+const ExpenseEntry = ({
+  expenseData,
+  onChange,
+  onSubmit,
+  onCancel,
+  showCancel,
+}) => {
   return (
     <form onSubmit={onSubmit} className="expense-entry-form">
       <label>
@@ -35,9 +41,11 @@ const ExpenseEntry = ({ expenseData, onChange, onSubmit, onCancel }) => {
         />
       </label>
       <div className="expense-entry-buttons">
-        <button type="button" onClick={onCancel}>
-          Cancel
-        </button>
+        {showCancel && (
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
+        )}
         <button type="submit">Submit</button>
       </div>
     </form>

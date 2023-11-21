@@ -51,6 +51,7 @@ const AddExpenses = () => {
         }
         onSubmit={handleSubmit}
         onCancel={handleCancel}
+        showCancel={false}
       />
     </div>
   );

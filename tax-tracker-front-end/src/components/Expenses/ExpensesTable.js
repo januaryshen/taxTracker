@@ -15,7 +15,10 @@ const ExpensesTable = ({
           <th className="date-column" onClick={() => sortExpenses("date")}>
             Date{getSortIndicator("date")}
           </th>
-          <th onClick={() => sortExpenses("description")}>
+          <th
+            className="description-column"
+            onClick={() => sortExpenses("description")}
+          >
             Description{getSortIndicator("description")}
           </th>
           <th onClick={() => sortExpenses("amount")}>
@@ -28,7 +31,7 @@ const ExpensesTable = ({
         {expenses.map((expense) => (
           <tr key={expense.id}>
             <td className="date-column">{expense.date}</td>
-            <td>{expense.description}</td>
+            <td className="description-column">{expense.description}</td>
             <td>${expense.amount}</td>
             <td className="actions-column">
               <button onClick={() => handleEditClick(expense)}>Edit</button>

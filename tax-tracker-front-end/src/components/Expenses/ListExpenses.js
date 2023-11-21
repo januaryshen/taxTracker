@@ -134,6 +134,7 @@ const ListExpenses = () => {
             onChange={handleChange}
             onSubmit={handleUpdate}
             onCancel={handleCancel}
+            showCancel={true}
           />
         )}
       </div>

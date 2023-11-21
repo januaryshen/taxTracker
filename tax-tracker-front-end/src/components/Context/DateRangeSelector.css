@@ -1,7 +1,7 @@
 .date-range-selector {
     display: inline-block; /* Allows the element to size according to its content */
     text-align: center;
-    margin: 2rem auto; /* Centers the element horizontally */
+    margin: 0.5rem auto; /* Centers the element horizontally */
     padding: 0.5rem;
     background-color: #f9f9f9;
     border-radius: 8px;

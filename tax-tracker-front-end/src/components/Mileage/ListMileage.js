@@ -136,7 +136,7 @@ const ListMileage = () => {
   return (
     <>
       <DateRangeSelector />
-      <div className="list-expenses-container">
+      <div>
         {!isEditing ? (
           <MileageTable
             mileageData={sortedMileage}
