@@ -1,5 +1,5 @@
 import React from "react";
-import "./Expenses/ExpensesTable.css";
+import "../Expenses/ExpensesTable.css";
 
 const MileageTable = ({
   mileageData,

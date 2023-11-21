@@ -1,6 +1,6 @@
 import React from "react";
 import "./MileageEntry.css";
-import MapSelector from "./MapSelector";
+import MapSelector from "../Context/MapSelector";
 
 const MileageEntry = ({ mileageData, onChange, onSubmit, onCancel }) => {
   return (

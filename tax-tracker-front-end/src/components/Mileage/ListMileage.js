@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { DateRangeContext } from "./DateRangeContext";
-import DateRangeSelector from "./DateRangeSelector";
+import { DateRangeContext } from "../Context/DateRangeContext";
+import DateRangeSelector from "../Context/DateRangeSelector";
 import "./ListMileage.css";
 import MileageTable from "./MileageTable";
 import MileageEntry from "./MileageEntry";
-import { MileageContext } from "./MileageContext";
+import { MileageContext } from "../Context/MileageContext";
 
 const ListMileage = () => {
   const { locations } = useContext(MileageContext);
@@ -20,7 +20,7 @@ const ListMileage = () => {
 
   useEffect(() => {
     fetchMileage();
-    console.log("locations", locations)
+    console.log("locations", locations);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
@@ -95,7 +95,6 @@ const ListMileage = () => {
     setSelectedMileage(mileageEntry);
     setIsEditing(true);
   };
-  
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -106,9 +105,9 @@ const ListMileage = () => {
       departure_lat: locations.departure.lat,
       departure_lng: locations.departure.lng,
       arrival_lat: locations.arrival.lat,
-      arrival_lng: locations.arrival.lng
+      arrival_lng: locations.arrival.lng,
     };
-  
+
     fetch(`http://127.0.0.1:8000/api/mileage/${selectedMileage.id}/`, {
       method: "PATCH",
       headers: {
@@ -116,19 +115,18 @@ const ListMileage = () => {
       },
       body: JSON.stringify(updatedMileageData),
     })
-    .then((response) => response.json())
-    .then(() => {
-      fetchMileage(); // Refresh the list
-      setIsEditing(false);
-    })
-    .catch((error) => console.error("Error:", error));
+      .then((response) => response.json())
+      .then(() => {
+        fetchMileage(); // Refresh the list
+        setIsEditing(false);
+      })
+      .catch((error) => console.error("Error:", error));
   };
-  
 
   const handleChange = (e) => {
-    setSelectedMileage(prevMileage => ({
+    setSelectedMileage((prevMileage) => ({
       ...prevMileage,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 

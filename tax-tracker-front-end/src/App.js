@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import Expenses from "./components/Expenses/Expenses";
-import Mileage from "./components/Mileage";
-import { DateRangeProvider } from "./components/DateRangeContext";
-import { MileageProvider } from "./components/MileageContext";
+import Mileage from "./components/Mileage/Mileage";
+import { DateRangeProvider } from "./components/Context/DateRangeContext";
+import { MileageProvider } from "./components/Context/MileageContext";
 import { LoadScript } from "@react-google-maps/api";
 
 const App = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import MileageEntry from "./MileageEntry";
-import { MileageContext } from "./MileageContext";
+import { MileageContext } from "../Context/MileageContext";
 import "./AddMileage.css";
 
 const AddMileage = () => {
