@@ -1,5 +1,25 @@
 .
 ├── README.md
+├── myproject
+│   ├── db.sqlite3
+│   ├── manage.py
+│   ├── myapp
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   ├── serializers.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   └── myproject
+│       ├── __init__.py
+│       ├── asgi.py
+│       ├── settings.py
+│       ├── urls.py
+│       └── wsgi.py
 ├── projectStructure.txt
 ├── tax-tracker-django-back-end
 │   ├── db.sqlite3
@@ -77,4 +97,4 @@
         ├── reportWebVitals.js
         └── setupTests.js
 
-12 directories, 66 files
+15 directories, 83 files
