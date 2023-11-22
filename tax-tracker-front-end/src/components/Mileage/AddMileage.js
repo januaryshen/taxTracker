@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import MileageEntry from "./MileageEntry";
-import { MileageContext } from "../Context/MileageContext";
 import "./AddMileage.css";
 
 const AddMileage = () => {
@@ -16,41 +15,15 @@ const AddMileage = () => {
     arrival_location: "1020 S 40th Ave G, Yakima, WA 98908",
   });
 
-  const { locations } = useContext(MileageContext);
-
-  useEffect(() => {
-    if (locations.departure && locations.arrival) {
-      setMileageData((m) => ({
-        ...m,
-        departure_lat: locations.departure.lat,
-        departure_lng: locations.departure.lng,
-        departure_location: locations.departure.address,
-        arrival_lat: locations.arrival.lat,
-        arrival_lng: locations.arrival.lng,
-        arrival_location: locations.arrival.address,
-      }));
-    }
-  }, [locations]);
-console.log("location", locations)
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const updatedMileageData = {
-      ...mileageData,
-      departure_lat: locations.departure?.lat,
-      departure_lng: locations.departure?.lng,
-      departure_location: locations.departure?.address,
-      arrival_lat: locations.arrival?.lat,
-      arrival_lng: locations.arrival?.lng,
-      arrival_location: locations.arrival?.address,
-    };
 
     fetch("http://127.0.0.1:8000/api/mileage/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedMileageData),
+      body: JSON.stringify(mileageData),
     })
       .then((response) => {
         if (!response.ok) {
