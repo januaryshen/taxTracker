@@ -12,8 +12,6 @@ const MapSelector = ({ selectedMileage }) => {
   const departureSearchBoxRef = useRef(null);
   const arrivalSearchBoxRef = useRef(null);
 
-  console.log("MapSelector", locations, markers, selectedMileage, mapRef);
-
   useEffect(() => {
     if (locations.departure && locations.departure.updated) {
       setMarkers((prev) => ({ ...prev, departure: locations.departure }));
