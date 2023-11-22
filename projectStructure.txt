@@ -1,0 +1,80 @@
+.
+├── README.md
+├── projectStructure.txt
+├── tax-tracker-django-back-end
+│   ├── db.sqlite3
+│   ├── manage.py
+│   ├── myapp
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── migrations
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── 0002_mileagedata_arrival_lat_mileagedata_arrival_lng_and_more.py
+│   │   │   └── __init__.py
+│   │   ├── models.py
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   ├── serializers.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   └── myproject
+│       ├── __init__.py
+│       ├── asgi.py
+│       ├── settings.py
+│       ├── urls.py
+│       └── wsgi.py
+└── tax-tracker-front-end
+    ├── README.md
+    ├── package-lock.json
+    ├── package.json
+    └── src
+        ├── App.css
+        ├── App.js
+        ├── App.test.js
+        ├── Images
+        │   └── Subject.png
+        ├── components
+        │   ├── Context
+        │   │   ├── DateRangeContext.js
+        │   │   ├── DateRangeSelector.css
+        │   │   ├── DateRangeSelector.js
+        │   │   ├── MapSelector.css
+        │   │   ├── MapSelector.js
+        │   │   ├── MileageContext.js
+        │   │   ├── mapUtils.js
+        │   │   └── markerHandlers.js
+        │   ├── DownloadCSV.css
+        │   ├── DownloadCSV.js
+        │   ├── Expenses
+        │   │   ├── AddExpenses.css
+        │   │   ├── AddExpenses.js
+        │   │   ├── ExpenseEntry.css
+        │   │   ├── ExpenseEntry.js
+        │   │   ├── Expenses.css
+        │   │   ├── Expenses.js
+        │   │   ├── ExpensesTable.css
+        │   │   ├── ExpensesTable.js
+        │   │   ├── ListExpenses.css
+        │   │   └── ListExpenses.js
+        │   ├── Mileage
+        │   │   ├── AddMileage.css
+        │   │   ├── AddMileage.js
+        │   │   ├── ListMileage.css
+        │   │   ├── ListMileage.js
+        │   │   ├── Mileage.css
+        │   │   ├── Mileage.js
+        │   │   ├── MileageEntry.css
+        │   │   ├── MileageEntry.js
+        │   │   ├── MileageTable.css
+        │   │   └── MileageTable.js
+        │   ├── NavBar.css
+        │   ├── NavBar.js
+        │   └── ParticlesComponent.js
+        ├── index.css
+        ├── index.js
+        ├── reportWebVitals.js
+        └── setupTests.js
+
+12 directories, 66 files
