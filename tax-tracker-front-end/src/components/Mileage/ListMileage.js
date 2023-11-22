@@ -97,14 +97,15 @@ const ListMileage = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
+    console.log("location in list mileage", locations)
     const updatedMileageData = {
       ...selectedMileage,
-      departure_location: locations.departure.address,
-      arrival_location: locations.arrival.address,
-      departure_lat: locations.departure.lat,
-      departure_lng: locations.departure.lng,
-      arrival_lat: locations.arrival.lat,
-      arrival_lng: locations.arrival.lng,
+      departure_location: locations.departure?.address,
+      arrival_location: locations.arrival?.address,
+      departure_lat: locations.departure?.lat,
+      departure_lng: locations.departure?.lng,
+      arrival_lat: locations.arrival?.lat,
+      arrival_lng: locations.arrival?.lng,
     };
 
     fetch(`http://127.0.0.1:8000/api/mileage/${selectedMileage.id}/`, {
