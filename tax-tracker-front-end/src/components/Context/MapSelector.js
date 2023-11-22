@@ -46,7 +46,7 @@ const MapSelector = ({ selectedMileage }) => {
 
   const mapContainerStyle = {
     height: "40vh",
-    width: "90vw",
+    width: "80vw",
   };
 
   let center = { lat: 47.6101, lng: -122.2015 }; // Default center (Bellevue, WA)

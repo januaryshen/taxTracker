@@ -22,7 +22,7 @@ const MileageTable = ({
             Arrival{getSortIndicator("arrival_location")}
           </th>
           <th onClick={() => sortByKey("mileage")}>
-            Mileage (mile){getSortIndicator("mileage")}
+            Mileage{getSortIndicator("mileage")}
           </th>
           <th className="actions-column">Actions</th>
         </tr>

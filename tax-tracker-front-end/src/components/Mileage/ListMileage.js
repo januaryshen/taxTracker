@@ -135,24 +135,31 @@ const ListMileage = () => {
 
   return (
     <>
-      <DateRangeSelector />
       <div>
         {!isEditing ? (
-          <MileageTable
-            mileageData={sortedMileage}
-            sortByKey={sortByKey}
-            getSortIndicator={getSortIndicator}
-            handleEditClick={handleEditClick}
-            handleDelete={handleDelete}
-          />
+          <>
+            <DateRangeSelector />
+            <MileageTable
+              mileageData={sortedMileage}
+              sortByKey={sortByKey}
+              getSortIndicator={getSortIndicator}
+              handleEditClick={handleEditClick}
+              handleDelete={handleDelete}
+            />
+          </>
         ) : (
-          <MileageEntry
-            mileageData={selectedMileage}
-            onChange={handleChange}
-            onSubmit={handleUpdate}
-            onCancel={handleCancel}
-            showCancel={true}
-          />
+          <>
+          <h2>
+            Edit Mileage
+          </h2>
+            <MileageEntry
+              mileageData={selectedMileage}
+              onChange={handleChange}
+              onSubmit={handleUpdate}
+              onCancel={handleCancel}
+              showCancel={true}
+            />
+          </>
         )}
       </div>
     </>

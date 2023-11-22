@@ -8,12 +8,12 @@ const AddMileage = () => {
   const [mileageData, setMileageData] = useState({
     user: 1,
     date: today,
-    departure_lat: 47.6101497,
-    departure_lng: -122.2015159,
-    departure_location: "Bellevue, WA, USA",
-    arrival_lat: 47.6061389,
-    arrival_lng: -122.3328481,
-    arrival_location: "Seattle, WA, USA",
+    departure_lat: 47.61467378534238,
+    departure_lng: -122.19859958661584,
+    departure_location: "500 106th Ave NE, Bellevue, WA 98004",
+    arrival_lat: 46.585859563555424,
+    arrival_lng: -120.5629622019892,
+    arrival_location: "1020 S 40th Ave G, Yakima, WA 98908",
   });
 
   const { locations } = useContext(MileageContext);
@@ -31,7 +31,7 @@ const AddMileage = () => {
       }));
     }
   }, [locations]);
-
+console.log("location", locations)
   const handleSubmit = (e) => {
     e.preventDefault();
 

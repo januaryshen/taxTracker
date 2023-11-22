@@ -5,11 +5,12 @@
   margin: auto; /* Centers the form */
   padding: 20px;
   font-weight: normal;
-  color: #FFE066;
+  color: #ffe066;
 }
 
 .mileage-entry-form label {
-  font-weight: bold;
+  font-size: large;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .mileage-entry-form input[type="date"] {
@@ -17,18 +18,23 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   margin: 0 5px;
+  text-align: center;
 }
 
 .form-group p {
-  font-weight: bold;
+  font-size: large;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .form-group span {
   display: inline-block;
   margin-bottom: 5px;
+  text-decoration: underline;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .mileage-entry-form button {
   margin-top: 10px;
   margin-bottom: 10px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

@@ -1,45 +1,21 @@
-  
+.search-box {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
 
-  .search-box {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-  }
-  
-  .search-box input {
-    box-sizing: border-box;
-    width: 240px;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-  }
+.search-box input {
+  box-sizing: border-box;
+  width: 240px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
 
-  .map-selector-container {
-    height: 60vh; /* This will take 60% of the viewport height */
-    width: 80vw; /* This will take 80% of the viewport width */
-    max-height: 500px; /* Maximum height */
-    max-width: 800px; /* Maximum width */
-    min-height: 300px; /* Minimum height */
-    min-width: 400px; /* Minimum width */
-    margin: auto; /* This centers the map in its parent container */
-    position: center; /* Needed for absolute positioning of children */
-  }
-  
-  
-  /* For smaller screens, adjust the size */
-  @media (max-width: 768px) {
-    .map-container {
-      height: 50vh;
-    }
-  }
-  
-  /* For very small screens, make further adjustments */
-  @media (max-width: 480px) {
-    .map-container {
-      height: 40vh;
-    }
-  }
-  
+.map-selector-container {
+  margin: auto; /* This centers the map in its parent container */
+  position: center; /* Needed for absolute positioning of children */
+}
