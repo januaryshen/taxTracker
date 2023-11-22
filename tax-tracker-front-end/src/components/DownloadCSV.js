@@ -7,9 +7,11 @@ import "./DownloadCSV.css";
 const DownloadCSV = () => {
   const { startDate, endDate } = useContext(DateRangeContext);
 
+  console.log("start and end date", startDate, endDate);
+
   const fetchMileageData = async () => {
     const mileageResponse = await fetch(
-      `http://127.0.0.1:8000/api/mileage/?start_date=${startDate}&end_date=${endDate}`
+      `http://127.0.0.1:8000/api/mileage/?startDate=${startDate}&endDate=${endDate}`
     );
     const mileageData = await mileageResponse.json();
     return { mileageData };
@@ -17,7 +19,7 @@ const DownloadCSV = () => {
 
   const fetchExpenseData = async () => {
     const expensesResponse = await fetch(
-      `http://127.0.0.1:8000/api/expenses/?start_date=${startDate}&end_date=${endDate}`
+      `http://127.0.0.1:8000/api/expenses/?startDate=${startDate}&endDate=${endDate}`
     );
     const expensesData = await expensesResponse.json();
     return { expensesData };
@@ -50,7 +52,7 @@ const DownloadCSV = () => {
       "departure_lat",
       "departure_lng",
       "arrival_lat",
-      "arrival_lng"
+      "arrival_lng",
     ];
     const csvContent = convertToCSV(mileageData, headers);
     downloadCSV(csvContent, "mileage_data.csv");
@@ -58,7 +60,7 @@ const DownloadCSV = () => {
 
   const handleDownloadExpenses = async () => {
     const { expensesData } = await fetchExpenseData();
-    const headers = ["id","user", "date", "description", "amount"];
+    const headers = ["id", "user", "date", "description", "amount"];
     const csvContent = convertToCSV(expensesData, headers);
     downloadCSV(csvContent, "expenses_data.csv");
   };
