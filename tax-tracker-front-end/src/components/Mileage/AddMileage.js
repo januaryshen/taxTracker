@@ -4,6 +4,7 @@ import "./AddMileage.css";
 import { MileageContext } from "../Context/MileageContext";
 
 const AddMileage = () => {
+  console.log("Add mileage")
   const today = new Date().toISOString().split("T")[0];
   const [mileageData, setMileageData] = useState({
     user: 1,

@@ -1,6 +1,8 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
 import { MileageContext } from "./MileageContext";
+import { calculateMidpoint, retroStyle, getCenter } from "./mapUtils";
+import { handlePlacesChanged } from "./markerHandlers";
 import "./MapSelector.css";
 
 const MapSelector = ({ selectedMileage }) => {
@@ -10,13 +12,7 @@ const MapSelector = ({ selectedMileage }) => {
   const departureSearchBoxRef = useRef(null);
   const arrivalSearchBoxRef = useRef(null);
 
-  console.log("locations", locations);
-  const calculateMidpoint = (lat1, lng1, lat2, lng2) => {
-    return {
-      lat: (lat1 + lat2) / 2,
-      lng: (lng1 + lng2) / 2,
-    };
-  };
+  console.log("MapSelector", locations, markers, selectedMileage, mapRef);
 
   useEffect(() => {
     if (locations.departure && locations.departure.updated) {
@@ -61,54 +57,6 @@ const MapSelector = ({ selectedMileage }) => {
     }
   }, [mapRef, markers]);
 
-  const mapContainerStyle = {
-    height: "40vh",
-    width: "80vw",
-  };
-
-  let center = { lat: 47.6101, lng: -122.2015 }; // Default center (Bellevue, WA)
-  if (
-    selectedMileage &&
-    selectedMileage.departure_lat &&
-    selectedMileage.arrival_lat
-  ) {
-    center = calculateMidpoint(
-      selectedMileage.departure_lat,
-      selectedMileage.departure_lng,
-      selectedMileage.arrival_lat,
-      selectedMileage.arrival_lng
-    );
-  }
-
-  const handlePlacesChanged = (searchBoxRef, isDeparture) => {
-    const places = searchBoxRef.current.getPlaces();
-    if (places && places.length > 0) {
-      const place = places[0];
-      const location = {
-        lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng(),
-        address: place.formatted_address,
-      };
-
-      mapRef.panTo(new window.google.maps.LatLng(location.lat, location.lng));
-      updateMarker(location, isDeparture);
-
-      // Update context with new location data
-      if (isDeparture) {
-        setDeparture({ ...location, updated: true });
-      } else {
-        setArrival({ ...location, updated: true });
-      }
-    }
-  };
-
-  const updateMarker = (location, isDeparture) => {
-    setMarkers((prevMarkers) => ({
-      ...prevMarkers,
-      [isDeparture ? "departure" : "arrival"]: location,
-    }));
-  };
-
   const renderSearchBox = (ref, placeholder, onPlacesChanged) => (
     <StandaloneSearchBox
       onLoad={(searchBox) => (ref.current = searchBox)}
@@ -122,10 +70,26 @@ const MapSelector = ({ selectedMileage }) => {
     </StandaloneSearchBox>
   );
 
+  const mapOptions = {
+    styles: retroStyle, 
+    mapTypeControl: false, // Add this line to hide map type control buttons
+    streetViewControl: false, // Hide Street View control
+    fullscreenControl: false, // Hide fullscreen control
+    keyboardShortcuts: false,    
+  };
+
+  const mapContainerStyle = {
+    height: "40vh",
+    width: "80vw",
+  };
+
+  const center = getCenter(selectedMileage);
+
   return (
     <div className="map-selector-container">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
+        options={mapOptions}
         center={center}
         zoom={12}
         onLoad={(map) => setMapRef(map)}

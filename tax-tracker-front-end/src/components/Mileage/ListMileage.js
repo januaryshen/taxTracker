@@ -97,7 +97,6 @@ const ListMileage = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log("location in list mileage", locations)
     const updatedMileageData = {
       ...selectedMileage,
       departure_location: locations.departure?.address,
@@ -134,7 +133,7 @@ const ListMileage = () => {
     setIsEditing(false);
   };
 
-  console.log("list midleage")
+  console.log("list mileage")
 
   return (
     <>

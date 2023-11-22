@@ -1,4 +1,5 @@
-import React, {useEffect} from "react";
+// src/Mileage/MileageEntry.js
+import React from "react";
 import "./MileageEntry.css";
 import MapSelector from "../Context/MapSelector";
 
@@ -10,7 +11,7 @@ const MileageEntry = ({
   showCancel,
 }) => {
 
-  useEffect(()=> {}, [mileageData])
+  console.log("mileage entry")
 
   return (
     <form onSubmit={onSubmit} className="mileage-entry-form">

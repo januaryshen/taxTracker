@@ -7,8 +7,6 @@ import "./DownloadCSV.css";
 const DownloadCSV = () => {
   const { startDate, endDate } = useContext(DateRangeContext);
 
-  console.log("start and end date", startDate, endDate);
-
   const fetchMileageData = async () => {
     const mileageResponse = await fetch(
       `http://127.0.0.1:8000/api/mileage/?startDate=${startDate}&endDate=${endDate}`
