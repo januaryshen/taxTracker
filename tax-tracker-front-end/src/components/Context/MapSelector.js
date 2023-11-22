@@ -1,12 +1,12 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
 import { MileageContext } from "./MileageContext";
-import { calculateMidpoint, retroStyle, getCenter } from "./mapUtils";
+import { retroStyle, getCenter } from "./mapUtils";
 import { handlePlacesChanged } from "./markerHandlers";
 import "./MapSelector.css";
 
 const MapSelector = ({ selectedMileage }) => {
-  const { locations, setDeparture, setArrival } = useContext(MileageContext);
+  const { locations } = useContext(MileageContext);
   const [mapRef, setMapRef] = useState(null);
   const [markers, setMarkers] = useState({});
   const departureSearchBoxRef = useRef(null);
@@ -71,11 +71,11 @@ const MapSelector = ({ selectedMileage }) => {
   );
 
   const mapOptions = {
-    styles: retroStyle, 
+    styles: retroStyle,
     mapTypeControl: false, // Add this line to hide map type control buttons
     streetViewControl: false, // Hide Street View control
     fullscreenControl: false, // Hide fullscreen control
-    keyboardShortcuts: false,    
+    keyboardShortcuts: false,
   };
 
   const mapContainerStyle = {

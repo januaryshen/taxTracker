@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import ExpenseEntry from "./ExpenseEntry";
 import { DateRangeContext } from "../Context/DateRangeContext";
 import DateRangeSelector from "../Context/DateRangeSelector";
-import "./ListExpenses.css";
 import ExpensesTable from "./ExpensesTable";
+import "./ListExpenses.css";
 
 const ListExpenses = () => {
   const [expenses, setExpenses] = useState([]);
@@ -17,7 +17,6 @@ const ListExpenses = () => {
 
   useEffect(() => {
     fetchExpenses();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
   const fetchExpenses = () => {

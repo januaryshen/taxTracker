@@ -1,4 +1,4 @@
-export const calculateMidpoint = (lat1, lng1, lat2, lng2) => {
+const calculateMidpoint = (lat1, lng1, lat2, lng2) => {
   return {
     lat: (lat1 + lat2) / 2,
     lng: (lng1 + lng2) / 2,
