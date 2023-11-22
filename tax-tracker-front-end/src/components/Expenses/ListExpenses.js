@@ -17,6 +17,7 @@ const ListExpenses = () => {
 
   useEffect(() => {
     fetchExpenses();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
   const fetchExpenses = () => {
