@@ -4,12 +4,13 @@ import { MileageContext } from "./MileageContext";
 import "./MapSelector.css";
 
 const MapSelector = ({ selectedMileage }) => {
-  const { setDeparture, setArrival } = useContext(MileageContext);
+  const { locations, setDeparture, setArrival } = useContext(MileageContext);
   const [mapRef, setMapRef] = useState(null);
   const [markers, setMarkers] = useState({});
   const departureSearchBoxRef = useRef(null);
   const arrivalSearchBoxRef = useRef(null);
 
+  console.log("locations", locations);
   const calculateMidpoint = (lat1, lng1, lat2, lng2) => {
     return {
       lat: (lat1 + lat2) / 2,
@@ -18,19 +19,28 @@ const MapSelector = ({ selectedMileage }) => {
   };
 
   useEffect(() => {
+    if (locations.departure && locations.departure.updated) {
+      setMarkers((prev) => ({ ...prev, departure: locations.departure }));
+    }
+    if (locations.arrival && locations.arrival.updated) {
+      setMarkers((prev) => ({ ...prev, arrival: locations.arrival }));
+    }
+  }, [locations]);
+
+  useEffect(() => {
     // Set initial markers based on selected mileage entry
     if (selectedMileage) {
       setMarkers({
         departure: {
           lat: selectedMileage.departure_lat,
           lng: selectedMileage.departure_lng,
-          address: selectedMileage.departure_location
+          address: selectedMileage.departure_location,
         },
         arrival: {
           lat: selectedMileage.arrival_lat,
           lng: selectedMileage.arrival_lng,
-          address: selectedMileage.arrival_location
-        }
+          address: selectedMileage.arrival_location,
+        },
       });
     }
   }, [selectedMileage]);
@@ -38,8 +48,15 @@ const MapSelector = ({ selectedMileage }) => {
   useEffect(() => {
     if (mapRef && markers.departure && markers.arrival) {
       const bounds = new window.google.maps.LatLngBounds();
-      bounds.extend(new window.google.maps.LatLng(markers.departure.lat, markers.departure.lng));
-      bounds.extend(new window.google.maps.LatLng(markers.arrival.lat, markers.arrival.lng));
+      bounds.extend(
+        new window.google.maps.LatLng(
+          markers.departure.lat,
+          markers.departure.lng
+        )
+      );
+      bounds.extend(
+        new window.google.maps.LatLng(markers.arrival.lat, markers.arrival.lng)
+      );
       mapRef.fitBounds(bounds);
     }
   }, [mapRef, markers]);
@@ -50,11 +67,15 @@ const MapSelector = ({ selectedMileage }) => {
   };
 
   let center = { lat: 47.6101, lng: -122.2015 }; // Default center (Bellevue, WA)
-  if (selectedMileage && selectedMileage.departure_lat && selectedMileage.arrival_lat) {
+  if (
+    selectedMileage &&
+    selectedMileage.departure_lat &&
+    selectedMileage.arrival_lat
+  ) {
     center = calculateMidpoint(
-      selectedMileage.departure_lat, 
-      selectedMileage.departure_lng, 
-      selectedMileage.arrival_lat, 
+      selectedMileage.departure_lat,
+      selectedMileage.departure_lng,
+      selectedMileage.arrival_lat,
       selectedMileage.arrival_lng
     );
   }
@@ -66,25 +87,25 @@ const MapSelector = ({ selectedMileage }) => {
       const location = {
         lat: place.geometry.location.lat(),
         lng: place.geometry.location.lng(),
-        address: place.formatted_address
+        address: place.formatted_address,
       };
 
       mapRef.panTo(new window.google.maps.LatLng(location.lat, location.lng));
       updateMarker(location, isDeparture);
-      
+
       // Update context with new location data
       if (isDeparture) {
-        setDeparture(location);
+        setDeparture({ ...location, updated: true });
       } else {
-        setArrival(location);
+        setArrival({ ...location, updated: true });
       }
     }
   };
 
   const updateMarker = (location, isDeparture) => {
-    setMarkers(prevMarkers => ({
+    setMarkers((prevMarkers) => ({
       ...prevMarkers,
-      [isDeparture ? 'departure' : 'arrival']: location
+      [isDeparture ? "departure" : "arrival"]: location,
     }));
   };
 
@@ -107,7 +128,7 @@ const MapSelector = ({ selectedMileage }) => {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={12}
-        onLoad={map => setMapRef(map)}
+        onLoad={(map) => setMapRef(map)}
       >
         <div className="search-box" style={{ top: "10px" }}>
           {renderSearchBox(
@@ -117,10 +138,8 @@ const MapSelector = ({ selectedMileage }) => {
           )}
         </div>
         <div className="search-box" style={{ top: "50px" }}>
-          {renderSearchBox(
-            arrivalSearchBoxRef,
-            "Enter arrival location",
-            () => handlePlacesChanged(arrivalSearchBoxRef, false)
+          {renderSearchBox(arrivalSearchBoxRef, "Enter arrival location", () =>
+            handlePlacesChanged(arrivalSearchBoxRef, false)
           )}
         </div>
         {markers.departure && <Marker position={markers.departure} />}

@@ -133,6 +133,8 @@ const ListMileage = () => {
     setIsEditing(false);
   };
 
+  console.log("list midleage")
+
   return (
     <>
       <div>
@@ -149,9 +151,7 @@ const ListMileage = () => {
           </>
         ) : (
           <>
-          <h2>
-            Edit Mileage
-          </h2>
+            <h2>Edit Mileage</h2>
             <MileageEntry
               mileageData={selectedMileage}
               onChange={handleChange}

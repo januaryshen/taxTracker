@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import MileageEntry from "./MileageEntry";
 import "./AddMileage.css";
+import { MileageContext } from "../Context/MileageContext";
 
 const AddMileage = () => {
   const today = new Date().toISOString().split("T")[0];
@@ -9,11 +10,28 @@ const AddMileage = () => {
     date: today,
     departure_lat: 47.61467378534238,
     departure_lng: -122.19859958661584,
-    departure_location: "500 106th Ave NE, Bellevue, WA 98004",
+    departure_location: "",
     arrival_lat: 46.585859563555424,
     arrival_lng: -120.5629622019892,
-    arrival_location: "1020 S 40th Ave G, Yakima, WA 98908",
+    arrival_location: "",
   });
+
+  const { locations } = useContext(MileageContext);
+
+  useEffect(() => {
+    // Update mileageData with locations from context
+    if (locations.departure || locations.arrival) {
+      setMileageData(prevData => ({
+        ...prevData,
+        departure_lat: locations.departure?.lat || prevData.departure_lat,
+        departure_lng: locations.departure?.lng || prevData.departure_lng,
+        departure_location: locations.departure?.address || prevData.departure_location,
+        arrival_lat: locations.arrival?.lat || prevData.arrival_lat,
+        arrival_lng: locations.arrival?.lng || prevData.arrival_lng,
+        arrival_location: locations.arrival?.address || prevData.arrival_location,
+      }));
+    }
+  }, [locations]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
