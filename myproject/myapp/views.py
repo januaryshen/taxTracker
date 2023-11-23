@@ -6,12 +6,14 @@ from .serializers import OtherExpensesSerializer, UserSerializer, MileageDataSer
 import requests
 from django.conf import settings
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
 class GenericAPIView(generics.GenericAPIView):
     serializer_class = None
     queryset = None
 
     # GET method for listing items or getting a single item
+    @csrf_exempt
     def get(self, request, *args, **kwargs):
         if 'pk' in kwargs:
             # Get a single item
@@ -37,6 +39,7 @@ class GenericAPIView(generics.GenericAPIView):
         return Response(serializer.data)
 
     # POST method for creating an item
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -45,6 +48,7 @@ class GenericAPIView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # PATCH method for updating an item
+    @csrf_exempt
     def patch(self, request, *args, **kwargs):
         item = generics.get_object_or_404(self.get_queryset(), pk=kwargs['pk'])
         serializer = self.get_serializer(item, data=request.data, partial=True)
@@ -54,6 +58,7 @@ class GenericAPIView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # DELETE method for deleting an item
+    @csrf_exempt
     def delete(self, request, *args, **kwargs):
         item = generics.get_object_or_404(self.get_queryset(), pk=kwargs['pk'])
         item.delete()
