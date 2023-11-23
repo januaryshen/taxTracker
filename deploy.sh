@@ -8,8 +8,8 @@ npm run build
 cp -rf build/static/* ../myproject/myapp/static/
 cp build/index.html ../myproject/myapp/templates/index.html
 
-# Go back to the root directory
-cd ..
+# Go back to the myproject directory
+cd ../myproject
 
 # Add and commit changes
 git add .

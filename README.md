@@ -1,37 +1,60 @@
 # taxTracker
 
-The monorepo setting (where backend and frontend are served in the same repo) is in `myproject`. The front end is served through myapp/static/ folder in `myproject``.
+`taxTracker` is a full-stack application for tracking tax-related information. It utilizes a monorepo setup with both the backend (Django) and frontend (React) served from the same repository. The frontend is served through the `myapp/static/` folder in the `myproject` directory.
 
-## Before deployment
+## Getting Started
 
-To make change a redeploy to Heroku, go to /tax-tracker-front-end and then run `npm run build`, and then do `cp -rf build/static/ ../myproject/myapp/static/` and `cp build/index.html ../myproject/myapp/templates/index.html`
+These instructions will guide you in setting up the project on your local machine for development and testing purposes.
 
-run migration locally (/myproject) to create migration files
-`python manage.py makemigrations myapp`
-`python manage.py migrate`
+### Prerequisites
+
+Before beginning, ensure you have the following tools installed:
+
+- Python
+- Django
+- Node.js and npm
+- Git
+
+### Installation
+
+Clone the repository and install the necessary dependencies:
+
+```bash
+# Clone the repository
+git clone https://github.com/januaryshen/taxTracker.git
+cd taxTracker
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Install Node.js dependencies
+cd tax-tracker-front-end
+npm install
+```
 
 ## Deploy to Heroku
 
-`git add .`
-`git commit -m "Add database migration"`
-`git push heroku main`
+run `deploy.sh`
 
-## After deployed to Heroku
+## Heroku Database Add-on
 
-run `heroku run python manage.py makemigrations` and `heroku run python manage.py migrate` so that database is created in Heroku.
+Before creating the add-on:
 
-`heroku run python manage.py makemigrations -a shin-tax`
-`heroku run python manage.py migrate -a shin-tax`
+Run below in /myproject to create migration files
+`python manage.py makemigrations myapp`
+`python manage.py migrate`
 
-2. update `REACT_APP_API_URL` in tax-tracker-front-end .env with the app location
+After creating the add-on:
 
-### Database
+1. Migrate schema to Heroku Postgresql
+   `heroku run python manage.py makemigrations -a shin-tax`
+   `heroku run python manage.py migrate -a shin-tax`
 
-0. Enter the Heroku database `heroku pg:psql postgresql-flat-01113 --app shin-tax` or find the URL on Heroku dashboard
-1. create a user so that it can be used in mileage and expense table
+2. Enter the Heroku database `heroku pg:psql postgresql-flat-01113 --app shin-tax` or find the URL on Heroku dashboard
+3. create a user so that it can be used in mileage and expense table
    `shin-tax::DATABASE=> INSERT INTO public.myapp_user(name) VALUES('shin');`
 
-## Postgres Operations
+### Postgres Operations
 
 1. view tables `SELECT * FROM public.myapp_mileagedata;`
 2. see all the schema (my table is stored under public) `\dn`
