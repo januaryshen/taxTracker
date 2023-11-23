@@ -2,11 +2,10 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
 import { MileageContext } from "./MileageContext";
 import { retroStyle, getCenter } from "./mapUtils";
-import { handlePlacesChanged } from "./markerHandlers";
 import "./MapSelector.css";
 
 const MapSelector = ({ selectedMileage }) => {
-  const { locations } = useContext(MileageContext);
+  const { locations, setArrival, setDeparture } = useContext(MileageContext);
   const [mapRef, setMapRef] = useState(null);
   const [markers, setMarkers] = useState({});
   const departureSearchBoxRef = useRef(null);
@@ -54,6 +53,34 @@ const MapSelector = ({ selectedMileage }) => {
       mapRef.fitBounds(bounds);
     }
   }, [mapRef, markers]);
+
+  const updateMarker = (location, isDeparture) => {
+    setMarkers((prevMarkers) => ({
+      ...prevMarkers,
+      [isDeparture ? "departure" : "arrival"]: location,
+    }));
+  };
+
+  const handlePlacesChanged = (searchBoxRef, isDeparture) => {
+    const places = searchBoxRef.current.getPlaces();
+    if (places && places.length > 0) {
+      const place = places[0];
+      const location = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+        address: place.formatted_address,
+      };
+
+      mapRef.panTo(new window.google.maps.LatLng(location.lat, location.lng));
+      updateMarker(location, isDeparture);
+
+      if (isDeparture) {
+        setDeparture({ ...location, updated: true });
+      } else {
+        setArrival({ ...location, updated: true });
+      }
+    }
+  };
 
   const renderSearchBox = (ref, placeholder, onPlacesChanged) => (
     <StandaloneSearchBox

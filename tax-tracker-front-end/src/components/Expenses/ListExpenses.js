@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
-import ExpenseEntry from "./ExpenseEntry";
 import { DateRangeContext } from "../Context/DateRangeContext";
 import DateRangeSelector from "../Context/DateRangeSelector";
+import ExpenseEntry from "./ExpenseEntry";
 import ExpensesTable from "./ExpensesTable";
 import "./ListExpenses.css";
 
@@ -27,7 +27,7 @@ const ListExpenses = () => {
       startDate,
       endDate,
     }).toString();
-    fetch(`${apiUrl}/api/expenses/?${queryString}`)
+    fetch(`${apiUrl}/expenses/?${queryString}`)
       .then((response) => response.json())
       .then((data) => setExpenses(data))
       .catch((error) => console.error("Error:", error));

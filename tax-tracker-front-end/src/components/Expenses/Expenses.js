@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import ListExpenses from "./ListExpenses";
 import AddExpenses from "./AddExpenses";
-import "./Expenses.css"; // Import the CSS file
+import "./Expenses.css";
 
 const Expenses = () => {
   const [isAdd, setIsAdd] = useState(true);

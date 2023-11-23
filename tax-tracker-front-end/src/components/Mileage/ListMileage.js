@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { DateRangeContext } from "../Context/DateRangeContext";
 import DateRangeSelector from "../Context/DateRangeSelector";
-import "./ListMileage.css";
-import MileageTable from "./MileageTable";
 import MileageEntry from "./MileageEntry";
+import MileageTable from "./MileageTable";
 import { MileageContext } from "../Context/MileageContext";
+import "./ListMileage.css";
 
-const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
-
+const apiUrl = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000/api";
 
 const ListMileage = () => {
   const { locations } = useContext(MileageContext);
@@ -135,7 +134,6 @@ const ListMileage = () => {
   const handleCancel = () => {
     setIsEditing(false);
   };
-
 
   return (
     <>
