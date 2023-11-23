@@ -148,7 +148,7 @@ class MileageDataAPIView(GenericAPIView):
             data = response.json()
             # Extract distance from response
             distance = data['rows'][0]['elements'][0]['distance']['value']  # value in meters
-            return distance / 1000.0  # convert to kilometers if needed
+            return distance / 1609.0  # convert to mileage
         return None
 
   
