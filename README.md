@@ -10,3 +10,5 @@ run `heroku run python manage.py makemigrations` and `heroku run python manage.p
 
 `heroku run python manage.py makemigrations -a shin-tax-01`
 `heroku run python manage.py migrate -a shin-tax-01`
+
+2. update `REACT_APP_API_URL` in tax-tracker-front-end .env with the app location

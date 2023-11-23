@@ -5,7 +5,7 @@ import DateRangeSelector from "../Context/DateRangeSelector";
 import ExpensesTable from "./ExpensesTable";
 import "./ListExpenses.css";
 
-const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
+const apiUrl = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000/api";
 
 const ListExpenses = () => {
   const [expenses, setExpenses] = useState([]);
@@ -19,7 +19,7 @@ const ListExpenses = () => {
 
   useEffect(() => {
     fetchExpenses();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
   const fetchExpenses = () => {
@@ -76,15 +76,12 @@ const ListExpenses = () => {
 
   const handleDelete = (event, expenseId) => {
     event.stopPropagation();
-    fetch(
-      `http://https://shin-tax-01-8eb77e54808d.herokuapp.com//api/expenses/${expenseId}/`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`${apiUrl}/expenses/${expenseId}/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then(() => {
         fetchExpenses(); // Refresh the expenses list
       })
@@ -98,16 +95,13 @@ const ListExpenses = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(
-      `http://https://shin-tax-01-8eb77e54808d.herokuapp.com//api/expenses/${selectedExpense.id}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(selectedExpense),
-      }
-    )
+    fetch(`${apiUrl}/expenses/${selectedExpense.id}/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(selectedExpense),
+    })
       .then((response) => response.json())
       .then(() => {
         fetchExpenses(); // Refresh the expenses list
