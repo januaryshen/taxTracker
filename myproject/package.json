@@ -2,8 +2,7 @@
   "name": "tax-tracker",
   "version": "1.0.0",
   "scripts": {
-    "start": "python myproject/manage.py runserver",
-    "postinstall": "python -m pip install -r requirements.txt"
+    "start": "python myproject/manage.py runserver"
   },
   "engines": {
     "python": "3.x",
