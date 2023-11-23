@@ -34,7 +34,7 @@ npm install
 
 ## Deploy to Heroku
 
-run `deploy.sh`
+If the app is already created in Heroku, run `deploy.sh`. If not, run `Heroku create <app-name>` first.
 
 ## Heroku Database Add-on
 
