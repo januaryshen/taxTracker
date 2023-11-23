@@ -3,6 +3,8 @@ import MileageEntry from "./MileageEntry";
 import "./AddMileage.css";
 import { MileageContext } from "../Context/MileageContext";
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
+
 const AddMileage = () => {
   console.log("Add mileage");
   const today = new Date().toISOString().split("T")[0];
@@ -37,7 +39,7 @@ const AddMileage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://127.0.0.1:8000/api/mileage/", {
+    fetch(`${apiUrl}/api/mileage/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

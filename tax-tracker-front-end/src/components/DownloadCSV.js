@@ -4,12 +4,14 @@ import ParticlesComponent from "./ParticlesComponent";
 import { DateRangeContext } from "./Context/DateRangeContext";
 import "./DownloadCSV.css";
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
+
 const DownloadCSV = () => {
   const { startDate, endDate } = useContext(DateRangeContext);
 
   const fetchMileageData = async () => {
     const mileageResponse = await fetch(
-      `http://127.0.0.1:8000/api/mileage/?startDate=${startDate}&endDate=${endDate}`
+      `${apiUrl}/mileage/?startDate=${startDate}&endDate=${endDate}`
     );
     const mileageData = await mileageResponse.json();
     return { mileageData };
@@ -17,7 +19,7 @@ const DownloadCSV = () => {
 
   const fetchExpenseData = async () => {
     const expensesResponse = await fetch(
-      `http://127.0.0.1:8000/api/expenses/?startDate=${startDate}&endDate=${endDate}`
+      `${apiUrl}/expenses/?startDate=${startDate}&endDate=${endDate}`
     );
     const expensesData = await expensesResponse.json();
     return { expensesData };

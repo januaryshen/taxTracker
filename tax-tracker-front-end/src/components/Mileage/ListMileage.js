@@ -6,6 +6,9 @@ import MileageTable from "./MileageTable";
 import MileageEntry from "./MileageEntry";
 import { MileageContext } from "../Context/MileageContext";
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
+
+
 const ListMileage = () => {
   const { locations } = useContext(MileageContext);
 
@@ -28,7 +31,7 @@ const ListMileage = () => {
       startDate,
       endDate,
     }).toString();
-    fetch(`http://127.0.0.1:8000/api/mileage/?${queryString}`)
+    fetch(`${apiUrl}/mileage/?${queryString}`)
       .then((response) => response.json())
       .then((data) => setMileage(data))
       .catch((error) => console.error("Error:", error));
@@ -77,7 +80,7 @@ const ListMileage = () => {
 
   const handleDelete = (event, mileageId) => {
     event.stopPropagation();
-    fetch(`http://127.0.0.1:8000/api/mileage/${mileageId}/`, {
+    fetch(`${apiUrl}/mileage/${mileageId}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +110,7 @@ const ListMileage = () => {
       arrival_lng: locations.arrival?.lng,
     };
 
-    fetch(`http://127.0.0.1:8000/api/mileage/${selectedMileage.id}/`, {
+    fetch(`${apiUrl}/api/mileage/${selectedMileage.id}/`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

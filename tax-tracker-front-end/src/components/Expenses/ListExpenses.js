@@ -5,6 +5,8 @@ import DateRangeSelector from "../Context/DateRangeSelector";
 import ExpensesTable from "./ExpensesTable";
 import "./ListExpenses.css";
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
+
 const ListExpenses = () => {
   const [expenses, setExpenses] = useState([]);
   const [selectedExpense, setSelectedExpense] = useState(null);
@@ -25,7 +27,7 @@ const ListExpenses = () => {
       startDate,
       endDate,
     }).toString();
-    fetch(`http://127.0.0.1:8000/api/expenses/?${queryString}`)
+    fetch(`${apiUrl}/api/expenses/?${queryString}`)
       .then((response) => response.json())
       .then((data) => setExpenses(data))
       .catch((error) => console.error("Error:", error));
@@ -74,12 +76,15 @@ const ListExpenses = () => {
 
   const handleDelete = (event, expenseId) => {
     event.stopPropagation();
-    fetch(`http://127.0.0.1:8000/api/expenses/${expenseId}/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `http://https://shin-tax-01-8eb77e54808d.herokuapp.com//api/expenses/${expenseId}/`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then(() => {
         fetchExpenses(); // Refresh the expenses list
       })
@@ -93,13 +98,16 @@ const ListExpenses = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(`http://127.0.0.1:8000/api/expenses/${selectedExpense.id}/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(selectedExpense),
-    })
+    fetch(
+      `http://https://shin-tax-01-8eb77e54808d.herokuapp.com//api/expenses/${selectedExpense.id}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(selectedExpense),
+      }
+    )
       .then((response) => response.json())
       .then(() => {
         fetchExpenses(); // Refresh the expenses list
