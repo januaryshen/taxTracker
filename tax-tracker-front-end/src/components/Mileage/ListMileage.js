@@ -136,7 +136,6 @@ const ListMileage = () => {
     setIsEditing(false);
   };
 
-  console.log("list mileage")
 
   return (
     <>

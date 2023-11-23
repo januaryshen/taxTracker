@@ -6,7 +6,6 @@ import { MileageContext } from "../Context/MileageContext";
 const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api';
 
 const AddMileage = () => {
-  console.log("Add mileage");
   const today = new Date().toISOString().split("T")[0];
   const [mileageData, setMileageData] = useState({
     user: 1,
@@ -39,7 +38,7 @@ const AddMileage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`${apiUrl}/api/mileage/`, {
+    fetch(`${apiUrl}/mileage/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

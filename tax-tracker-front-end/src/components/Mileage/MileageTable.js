@@ -8,7 +8,6 @@ const MileageTable = ({
   handleEditClick,
   handleDelete,
 }) => {
-  console.log("mileage table")
   return (
     <table className="list-expenses-table">
       <thead>
