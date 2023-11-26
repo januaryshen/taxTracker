@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  django:
+    image: chi12/django-backend:1.0
+    volumes:
+      - ./data:/usr/src/app/data # Mount the local 'data' directory to the container's 'data' directory
+    ports:
+      - "8000:8000"
+
+  react:
+    image: chi12/react-frontend:1.0
+    ports:
+      - "3000:5000"
